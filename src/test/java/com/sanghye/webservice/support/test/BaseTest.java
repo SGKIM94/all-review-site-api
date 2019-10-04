@@ -7,3 +7,9 @@ public class BaseTest {
     @Rule
     public JUnitSoftAssertions softly = new JUnitSoftAssertions();
 }
+
+
+
+
+
+
