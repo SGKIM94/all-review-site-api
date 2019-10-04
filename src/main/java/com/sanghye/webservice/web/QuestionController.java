@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/questions")
 public class QuestionController {
-    private static final Logger log = LoggerFactory.getLogger(nextstep.web.UserController.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Resource(name = "qnaService")
     private QnaService qnaService;
