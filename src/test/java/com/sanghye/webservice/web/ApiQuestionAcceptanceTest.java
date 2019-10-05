@@ -12,9 +12,9 @@ import static com.sanghye.webservice.domain.QuestionTest.newQuestion;
 
 public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     private static final Logger log = LoggerFactory.getLogger(ApiQuestionAcceptanceTest.class);
-    static final String TITLE = "제목 내용";
-    static final String CONTENTS = "본문 내용";
-    static final String API_QUESTION_LOCATION = "/api/questions";
+    private static final String TITLE = "제목 내용";
+    private static final String CONTENTS = "본문 내용";
+    private static final String API_QUESTION_LOCATION = "/api/questions";
 
     @Test
     public void create() throws Exception {
@@ -49,7 +49,6 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     @Test
     public void update_no_login() throws Exception {
         User loginUser = defaultUser();
-
         String location = createLocation(loginUser);
 
         Question original = getResource(location, Question.class, loginUser);
