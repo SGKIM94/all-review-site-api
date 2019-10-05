@@ -5,13 +5,7 @@ import com.sanghye.webservice.domain.Answer;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.support.test.AcceptanceTest;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
-import org.springframework.util.MultiValueMap;
-
-
-import java.util.Optional;
 
 import static com.sanghye.webservice.domain.QuestionTest.newQuestion;
 

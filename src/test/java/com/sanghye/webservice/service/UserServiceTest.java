@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class UserServiceTest extends BaseTest {
     @Mock
     private UserRepository userRepository;

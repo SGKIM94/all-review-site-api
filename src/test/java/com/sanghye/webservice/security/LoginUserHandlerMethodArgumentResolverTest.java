@@ -14,7 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class LoginUserHandlerMethodArgumentResolverTest extends BaseTest {
     @Mock
     private MethodParameter parameter;

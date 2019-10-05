@@ -15,7 +15,7 @@ import java.util.Base64;
 
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class BasicAuthInterceptorTest extends BaseTest {
     @Mock
     private UserService userService;
