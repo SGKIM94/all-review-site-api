@@ -19,9 +19,6 @@ import java.util.List;
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    @Resource
-    BasicAuthInterceptor basicAuthInterceptor;
-
     @Resource(name = "userService")
     private UserService userService;
 
