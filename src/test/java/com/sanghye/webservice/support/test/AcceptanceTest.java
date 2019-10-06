@@ -74,7 +74,7 @@ public abstract class AcceptanceTest extends BaseTest {
         return questionRepository.findById(DEFAULT_QUESTION_ID);
     }
 
-    protected Optional<Answer> defaultAnswer() {
+    private Optional<Answer> defaultAnswer() {
         return answerRepository.findById(DEFAULT_ANSWER_ID);
     }
 
