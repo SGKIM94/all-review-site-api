@@ -3,12 +3,8 @@ package com.sanghye.webservice.validate;
 public class RestStatus {
     private boolean status;
 
-    public RestStatus(boolean status) {
+    private RestStatus(boolean status) {
         this.status = status;
-    }
-
-    public boolean isStatus() {
-        return status;
     }
 
     @Override
