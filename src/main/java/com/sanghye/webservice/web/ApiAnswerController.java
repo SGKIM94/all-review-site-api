@@ -20,7 +20,7 @@ import java.net.URI;
 public class ApiAnswerController {
     @Resource(name = "qnaService")
     private QnaService qnaService;
-    static final String API_ANSWER_LOCATION = "/api/answers/";
+    private static final String API_ANSWER_LOCATION = "/api/answers/";
 
     @PostMapping("")
     public ResponseEntity<Void> create(@LoginUser User loginUser, @Valid @RequestBody Answer answer) {

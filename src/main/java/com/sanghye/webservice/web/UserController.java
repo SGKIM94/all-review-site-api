@@ -2,7 +2,6 @@ package com.sanghye.webservice.web;
 
 import com.sanghye.webservice.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
-import com.sanghye.webservice.security.BasicAuthInterceptor;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.service.UserService;
 import org.slf4j.Logger;
