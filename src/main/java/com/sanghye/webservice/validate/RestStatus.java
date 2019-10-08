@@ -3,7 +3,7 @@ package com.sanghye.webservice.validate;
 public class RestStatus {
     private boolean status;
 
-    private RestStatus(boolean status) {
+    RestStatus(boolean status) {
         this.status = status;
     }
 
