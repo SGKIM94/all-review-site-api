@@ -33,7 +33,6 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(String userId, String password) throws UnAuthenticationException {
-        //TODO : preHandler 를 이용해서 Login Session 구현
         userService.login(userId, password);
         return "redirect:/questions/form";
     }
