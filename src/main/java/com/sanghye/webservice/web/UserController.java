@@ -34,7 +34,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(String userId, String password) throws UnAuthenticationException {
         userService.login(userId, password);
-        return "redirect:/questions/form";
+        return "redirect:/questions/list";
     }
 
     @PostMapping("")
