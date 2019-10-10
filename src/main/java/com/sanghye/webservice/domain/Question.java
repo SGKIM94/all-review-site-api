@@ -4,6 +4,7 @@ package com.sanghye.webservice.domain;
 import com.sanghye.webservice.UnAuthorizedException;
 import com.sanghye.webservice.support.domain.AbstractEntity;
 import com.sanghye.webservice.support.domain.UrlGeneratable;
+import lombok.Builder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -35,11 +36,13 @@ public class Question extends AbstractEntity implements UrlGeneratable {
     public Question() {
     }
 
+    @Builder
     public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
 
+    @Builder
     public Question(long id, String title, String contents, User loginUser) {
         super(id);
         this.title = title;

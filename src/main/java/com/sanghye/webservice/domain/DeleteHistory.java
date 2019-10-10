@@ -1,5 +1,7 @@
 package com.sanghye.webservice.domain;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -23,6 +25,7 @@ public class DeleteHistory {
     public DeleteHistory() {
     }
 
+    @Builder
     public DeleteHistory(ContentType contentType, Long contentId, User deletedBy, LocalDateTime createDate) {
         this.contentType = contentType;
         this.contentId = contentId;

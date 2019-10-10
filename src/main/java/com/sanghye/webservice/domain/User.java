@@ -3,6 +3,7 @@ package com.sanghye.webservice.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sanghye.webservice.UnAuthorizedException;
 import com.sanghye.webservice.support.domain.AbstractEntity;
+import lombok.Builder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,10 +32,12 @@ public class User extends AbstractEntity {
     public User() {
     }
 
+    @Builder
     public User(String userId, String password, String name, String email) {
         this(0L, userId, password, name, email);
     }
 
+    @Builder
     public User(long id, String userId, String password, String name, String email) {
         super(id);
         this.userId = userId;
