@@ -3,6 +3,7 @@ package com.sanghye.webservice.service;
 import com.sanghye.webservice.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.domain.UserRepository;
+import com.sanghye.webservice.dto.user.UserLoginRequestDto;
 import com.sanghye.webservice.support.test.BaseTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 
+import static com.sanghye.webservice.fixtures.User.SANGGU;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
@@ -27,7 +29,7 @@ public class UserServiceTest extends BaseTest {
         User user = new User("sanjigi", "password", "name", "javajigi@slipp.net");
         when(userRepository.findByUserId(user.getUserId())).thenReturn(Optional.of(user));
 
-        User loginUser = userService.login(user.getUserId(), user.getPassword());
+        User loginUser = userService.checkLoginUser(user.getUserId(), user.getPassword());
         softly.assertThat(loginUser).isEqualTo(user);
     }
 
@@ -35,7 +37,7 @@ public class UserServiceTest extends BaseTest {
     public void login_failed_when_user_not_found() throws Exception {
         when(userRepository.findByUserId("sanjigi")).thenReturn(Optional.empty());
 
-        userService.login("sanjigi", "password");
+        userService.checkLoginUser("sanjigi", "password");
     }
 
     @Test(expected = UnAuthenticationException.class)
@@ -43,6 +45,19 @@ public class UserServiceTest extends BaseTest {
         User user = new User("sanjigi", "password", "name", "javajigi@slipp.net");
         when(userRepository.findByUserId(user.getUserId())).thenReturn(Optional.of(user));
 
-        userService.login(user.getUserId(), user.getPassword() + "2");
+        userService.checkLoginUser(user.getUserId(), user.getPassword() + "2");
+    }
+
+    @Test
+    public void UserLoginRequestDto_를_인자로받아서_login_이_되는가() throws UnAuthenticationException {
+        //given
+        String userId = "sangu";
+        UserLoginRequestDto user = new UserLoginRequestDto().toDtoEntity(userId, "1234");
+
+        //when
+        when(userRepository.findByUserId(userId)).thenReturn(Optional.of(SANGGU));
+
+        //then
+        userService.checkLoginUserToDto(user);
     }
 }
