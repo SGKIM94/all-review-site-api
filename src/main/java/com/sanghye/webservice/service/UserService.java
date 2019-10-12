@@ -16,6 +16,7 @@ public class UserService {
     @Resource(name = "userRepository")
     private UserRepository userRepository;
 
+    @Transactional
     public User add(User user) {
         return userRepository.save(user);
     }
@@ -27,28 +28,33 @@ public class UserService {
         return original;
     }
 
+    @Transactional(readOnly = true)
     public User findById(User loginUser, long id) {
         return userRepository.findById(id)
                 .filter(user -> user.equals(loginUser))
                 .orElseThrow(UnAuthorizedException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public User checkLoginUser(String userId, String password) throws UnAuthenticationException {
         return userRepository.findByUserId(userId)
                 .filter(user -> user.matchPassword(password))
                 .orElseThrow(UnAuthenticationException::new);
     }
 
-    User checkLoginUserToDto(UserLoginRequestDto loginDto) throws UnAuthenticationException {
-        return userRepository.findByUserId(loginDto.getUserId())
-                .filter(user -> user.matchPassword(loginDto.getPassword()))
-                .orElseThrow(UnAuthenticationException::new);
+    @Transactional(readOnly = true)
+    void checkLoginUserToDto(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+        userRepository.findByUserId(loginDto.getUserId())
+            .filter(user -> user.matchPassword(loginDto.getPassword()))
+            .orElseThrow(UnAuthenticationException::new);
     }
 
+    @Transactional(readOnly = true)
     public void login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
         checkLoginUserToDto(loginDto);
     }
