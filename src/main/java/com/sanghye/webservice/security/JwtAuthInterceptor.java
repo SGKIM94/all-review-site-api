@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.Charset;
 import java.util.Base64;
 
-public class BasicAuthInterceptor extends HandlerInterceptorAdapter {
-    private static final Logger log = LoggerFactory.getLogger(BasicAuthInterceptor.class);
+public class JwtAuthInterceptor extends HandlerInterceptorAdapter {
+    private static final Logger log = LoggerFactory.getLogger(JwtAuthInterceptor.class);
 
     @Autowired
     private UserService userService;
