@@ -2,7 +2,7 @@ package com.sanghye.webservice;
 
 import com.sanghye.webservice.converter.LocalDateConverter;
 import com.sanghye.webservice.converter.LocalDateTimeConverter;
-import com.sanghye.webservice.security.BasicAuthInterceptor;
+import com.sanghye.webservice.security.JwtAuthInterceptor;
 import com.sanghye.webservice.security.LoginUserHandlerMethodArgumentResolver;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -18,11 +18,23 @@ import java.util.List;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+    private static String[] INTERCEPTOR_WHITE_LIST = {
+            "/home",
+            "/base",
+            "/users/login"
+    };
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new LocalDateConverter("yyyy-MM-dd"));
         registry.addConverter(new LocalDateTimeConverter("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new JwtAuthInterceptor())
+                .addPathPatterns("/*")
+                .excludePathPatterns(INTERCEPTOR_WHITE_LIST);
     }
 
     @Bean
@@ -40,13 +52,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public BasicAuthInterceptor basicAuthInterceptor() {
-        return new BasicAuthInterceptor();
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(basicAuthInterceptor());
+    public JwtAuthInterceptor basicAuthInterceptor() {
+        return new JwtAuthInterceptor();
     }
 
     @Bean
