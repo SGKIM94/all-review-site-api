@@ -46,6 +46,14 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
+    @Builder
+    public User(String userId, String password) {
+        //TODO : 0L 로 넣으면 어떻게 생성되느니 확인하기
+        super(0L);
+        this.userId = userId;
+        this.password = password;
+    }
+
     public String getUserId() {
         return userId;
     }
