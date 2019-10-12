@@ -5,26 +5,12 @@ import com.sanghye.webservice.UnAuthorizedException;
 import com.sanghye.webservice.support.test.BaseTest;
 import org.junit.Test;
 
-import static com.sanghye.webservice.domain.AnswerTest.newAnswer;
-import static com.sanghye.webservice.domain.AnswerTest.newAnswerAnoterUser;
-import static com.sanghye.webservice.domain.UserTest.JAVAJIGI;
-import static com.sanghye.webservice.domain.UserTest.newUser;
+import static com.sanghye.webservice.fixtures.Answer.newAnswer;
+import static com.sanghye.webservice.fixtures.Answer.newAnswerAnotherUser;
+import static com.sanghye.webservice.fixtures.Question.newQuestion;
+import static com.sanghye.webservice.fixtures.User.*;
 
 public class QuestionTest extends BaseTest {
-    final static User SANGGU = newUser("sangu", "1234");
-
-    public static Question newQuestion(String title, String contents) {
-        return newQuestion(0L, title, contents, JAVAJIGI);
-    }
-
-    public static Question newQuestion(String title, String contents, User loginUser) {
-        return newQuestion(0L, title, contents, loginUser);
-    }
-
-    public static Question newQuestion(long id, String title, String contents, User loginUser) {
-        return new Question(id, title, contents, loginUser);
-    }
-
     @Test
     public void update_test() {
         User loginUser = JAVAJIGI;
@@ -85,7 +71,7 @@ public class QuestionTest extends BaseTest {
     public void cant_delete_as_answers_is_not_owner() {
         User loginUser = JAVAJIGI;
 
-        Answer answer = newAnswerAnoterUser("삭제못하는 댓글");
+        Answer answer = newAnswerAnotherUser("삭제못하는 댓글");
         Question question = newQuestion("제목", "내용", loginUser);
 
         question.addAnswer(answer);

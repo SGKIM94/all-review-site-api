@@ -4,22 +4,9 @@ import com.sanghye.webservice.UnAuthorizedException;
 import com.sanghye.webservice.support.test.BaseTest;
 import org.junit.Test;
 
+import static com.sanghye.webservice.fixtures.User.newUser;
+
 public class UserTest extends BaseTest {
-    public static final User JAVAJIGI = new User(1L, "javajigi", "password", "name", "javajigi@slipp.net");
-    public static final User SANJIGI = new User(2L, "sanjigi", "password", "name", "sanjigi@slipp.net");
-
-    public static User newUser(Long id) {
-        return new User(id, "userId", "pass", "name", "javajigi@slipp.net");
-    }
-
-    public static User newUser(String userId) {
-        return newUser(userId, "password");
-    }
-
-    public static User newUser(String userId, String password) {
-        return new User(0L, userId, password, "name", "javajigi@slipp.net");
-    }
-
     @Test
     public void update_owner() throws Exception {
         User origin = newUser("sanjigi");
