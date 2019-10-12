@@ -21,7 +21,7 @@ public class BasicAuthInterceptorTest extends BaseTest {
     private UserService userService;
 
     @InjectMocks
-    private BasicAuthInterceptor basicAuthInterceptor;
+    private JwtAuthInterceptor basicAuthInterceptor;
 
     @Test
     public void preHandle_로그인_성공() throws Exception {
@@ -29,7 +29,7 @@ public class BasicAuthInterceptorTest extends BaseTest {
         String password = "password";
         MockHttpServletRequest request = basicAuthHttpRequest(userId, password);
         User loginUser = new User(userId, "password", "name", "javajigi@slipp.net");
-        when(userService.login(userId, password)).thenReturn(loginUser);
+        when(userService.checkLoginUser(userId, password)).thenReturn(loginUser);
 
         basicAuthInterceptor.preHandle(request, null, null);
         softly.assertThat(request.getSession().getAttribute(HttpSessionUtils.USER_SESSION_KEY)).isEqualTo(loginUser);
