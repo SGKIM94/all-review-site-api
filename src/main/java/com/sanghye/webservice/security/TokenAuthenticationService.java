@@ -15,13 +15,13 @@ public class TokenAuthenticationService {
         String Jwt = Jwts.builder()
                 .setSubject(userId)
                 .setExpiration(new Date(System.currentTimeMillis()))
-                .signWith(SignatureAlgorithm.HS512, generateKey())
+                .signWith(SignatureAlgorithm.HS512, generateKey(SALT))
                 .compact();
 
         response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + Jwt);
     }
 
-    private byte[] generateKey(){
-        return SALT.getBytes();
+    byte[] generateKey(String salt){
+        return salt.getBytes();
     }
 }
