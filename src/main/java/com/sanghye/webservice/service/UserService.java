@@ -4,6 +4,7 @@ import com.sanghye.webservice.UnAuthenticationException;
 import com.sanghye.webservice.UnAuthorizedException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.domain.UserRepository;
+import com.sanghye.webservice.dto.user.UserLoginRequestDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,9 +37,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User login(String userId, String password) throws UnAuthenticationException {
+    public User checkLoginUser(String userId, String password) throws UnAuthenticationException {
         return userRepository.findByUserId(userId)
                 .filter(user -> user.matchPassword(password))
                 .orElseThrow(UnAuthenticationException::new);
+    }
+
+    User checkLoginUserToDto(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+        return userRepository.findByUserId(loginDto.getUserId())
+                .filter(user -> user.matchPassword(loginDto.getPassword()))
+                .orElseThrow(UnAuthenticationException::new);
+    }
+
+    public void login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+        checkLoginUserToDto(loginDto);
     }
 }
