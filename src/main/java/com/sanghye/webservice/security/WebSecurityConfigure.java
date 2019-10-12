@@ -5,12 +5,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.stereotype.Component;
 
 @Component
-public class webSecurityConfigure extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity auth) throws Exception {
         auth.authorizeRequests()
-                .antMatchers("/", "/users").permitAll()
+                .antMatchers("/", "/users/form").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
