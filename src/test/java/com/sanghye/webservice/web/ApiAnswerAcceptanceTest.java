@@ -7,7 +7,7 @@ import com.sanghye.webservice.support.test.AcceptanceTest;
 import org.junit.Test;
 import org.springframework.http.*;
 
-import static com.sanghye.webservice.domain.QuestionTest.newQuestion;
+import static com.sanghye.webservice.fixtures.Question.newQuestion;
 
 public class ApiAnswerAcceptanceTest extends AcceptanceTest {
     static final String TITLE = "제목 내용";
