@@ -21,7 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private static String[] INTERCEPTOR_WHITE_LIST = {
             "/home",
             "/base",
-            "/users/login"
+            "/user/login",
+            "/user/form"
     };
 
     @Override
@@ -33,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JwtAuthInterceptor())
-                .addPathPatterns("/*")
+                .addPathPatterns("/**")
                 .excludePathPatterns(INTERCEPTOR_WHITE_LIST);
     }
 
