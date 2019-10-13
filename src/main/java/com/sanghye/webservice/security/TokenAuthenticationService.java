@@ -1,11 +1,14 @@
 package com.sanghye.webservice.security;
 
+import com.sanghye.webservice.UnAuthenticationException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
+@Service("tokenService")
 public class TokenAuthenticationService {
     private static final String SALT = "63B75D39E3F6BFE72263F7C1145AC22E";
     private static final String HEADER_STRING = "Authorization";
@@ -18,7 +21,19 @@ public class TokenAuthenticationService {
                 .signWith(SignatureAlgorithm.HS512, generateKey(SALT))
                 .compact();
 
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + " " + Jwt);
+        response.setHeader(HEADER_STRING, TOKEN_PREFIX + Jwt);
+    }
+
+    boolean isAuthenticationUser(String token) throws UnAuthenticationException {
+        try {
+            Jwts.parser()
+                .setSigningKey(this.generateKey(SALT))
+                .parseClaimsJws(token);
+
+            return true;
+        } catch(Exception e) {
+            throw new UnAuthenticationException("토큰이 올바르지 않습니다.");
+        }
     }
 
     byte[] generateKey(String salt){
