@@ -12,24 +12,28 @@ import lombok.Setter;
 public class UserLoginRequestDto {
     private String userId;
     private String password;
+    private String token;
 
     @Builder
-    public UserLoginRequestDto(String userId, String password) {
+    public UserLoginRequestDto(String userId, String password, String token) {
         this.userId = userId;
         this.password = password;
+        this.token = token;
     }
 
-    public User toEntity(String userId, String password) {
+    User toEntity(String userId, String password, String token) {
         return User.builder()
                 .userId(userId)
                 .password(password)
+                .token(token)
                 .build();
     }
 
-    public UserLoginRequestDto toDtoEntity(String userId, String password) {
+    public UserLoginRequestDto toDtoEntity(String userId, String password, String token) {
         return UserLoginRequestDto.builder()
                 .userId(userId)
                 .password(password)
+                .token(token)
                 .build();
     }
 }

@@ -29,6 +29,9 @@ public class User extends AbstractEntity {
     @Size(max = 50)
     private String email;
 
+    @Size(max = 500)
+    private String token;
+
     public User() {
     }
 
@@ -47,11 +50,12 @@ public class User extends AbstractEntity {
     }
 
     @Builder
-    public User(String userId, String password) {
+    public User(String userId, String password, String token) {
         //TODO : 0L 로 넣으면 어떻게 생성되느니 확인하기
         super(0L);
         this.userId = userId;
         this.password = password;
+        this.token = token;
     }
 
     public String getUserId() {
@@ -88,6 +92,10 @@ public class User extends AbstractEntity {
     public User setEmail(String email) {
         this.email = email;
         return this;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public void update(User loginUser, User target) {
