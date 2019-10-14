@@ -5,16 +5,21 @@ import com.sanghye.webservice.UnAuthorizedException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.domain.UserRepository;
 import com.sanghye.webservice.dto.user.UserLoginRequestDto;
+import com.sanghye.webservice.security.TokenAuthenticationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service("userService")
 public class UserService {
     @Resource(name = "userRepository")
     private UserRepository userRepository;
+
+    @Resource(name = "tokenService")
+    private TokenAuthenticationService tokenAuthenticationService;
 
     @Transactional
     public User add(User user) {
@@ -55,7 +60,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public void login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+    public void login(UserLoginRequestDto loginDto, HttpServletResponse response) throws UnAuthenticationException {
+        tokenAuthenticationService.addAuthentication(response, loginDto.getUserId());
         checkLoginUserToDto(loginDto);
     }
 }
