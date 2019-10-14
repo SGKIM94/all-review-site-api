@@ -4,6 +4,7 @@ import com.sanghye.webservice.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.dto.user.UserLoginRequestDto;
 import com.sanghye.webservice.security.LoginUser;
+import com.sanghye.webservice.security.TokenAuthenticationService;
 import com.sanghye.webservice.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -33,8 +35,11 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
-        userService.login(loginDto);
+    public String login(UserLoginRequestDto loginDto, HttpServletResponse response) throws UnAuthenticationException {
+        userService.login(loginDto, response);
+
+        log.info("Authorization in header : {}", response.getHeader("Authorization"));
+
         return "redirect:/questions/list";
     }
 
