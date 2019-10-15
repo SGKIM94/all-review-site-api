@@ -5,8 +5,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static com.sanghye.webservice.domain.AnswerTest.newAnswer;
-import static com.sanghye.webservice.domain.UserTest.JAVAJIGI;
+import static com.sanghye.webservice.fixtures.Answer.newAnswer;
+import static com.sanghye.webservice.fixtures.User.JAVAJIGI;
 
 
 public class AnswersTest extends BaseTest {
