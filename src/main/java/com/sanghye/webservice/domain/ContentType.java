@@ -1,5 +1,5 @@
 package com.sanghye.webservice.domain;
 
 public enum ContentType {
-    QUESTION, ANSWER;
+    QUESTION, ANSWER, REVIEW;
 }
