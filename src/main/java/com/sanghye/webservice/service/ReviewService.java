@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
-@Service("qnaService")
+@Service("reviewService")
 public class ReviewService {
     private static final Logger log = LoggerFactory.getLogger(ReviewService.class);
 
