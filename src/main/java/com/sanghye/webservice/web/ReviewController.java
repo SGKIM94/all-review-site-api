@@ -5,6 +5,7 @@ import com.sanghye.webservice.CannotDeleteException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.service.QnaService;
+import com.sanghye.webservice.service.ReviewService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,19 +18,19 @@ import javax.annotation.Resource;
 @RequestMapping("/answers")
 public class ReviewController {
 
-    @Resource(name = "qnaService")
-    private QnaService qnaService;
+    @Resource(name = "reviewService")
+    private ReviewService reviewService;
 
 
     @PostMapping("")
     public String add(@LoginUser User user, long questionId, String contents) {
-        qnaService.addAnswer(user, questionId, contents);
+        reviewService.addAnswer(user, questionId, contents);
         return "redirect:/questions";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@LoginUser User loginUser, @PathVariable long id) throws CannotDeleteException {
-        qnaService.deleteAnswer(loginUser, id);
+        reviewService.deleteAnswer(loginUser, id);
         return "redirect:/questions";
     }
 }
