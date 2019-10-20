@@ -21,19 +21,17 @@ public class UserLoginRequestDto {
         this.token = token;
     }
 
-    User toEntity(String userId, String password, String token) {
+    User toEntity(String userId, String password) {
         return User.builder()
                 .userId(userId)
                 .password(password)
-                .token(token)
                 .build();
     }
 
-    public UserLoginRequestDto toDtoEntity(String userId, String password, String token) {
+    public UserLoginRequestDto toDtoEntity(String userId, String password) {
         return UserLoginRequestDto.builder()
                 .userId(userId)
                 .password(password)
-                .token(token)
                 .build();
     }
 }
