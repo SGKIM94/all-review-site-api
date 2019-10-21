@@ -15,13 +15,16 @@ public class TokenAuthenticationService {
     private static final String TOKEN_PREFIX = "Bearer";
 
     public void addAuthentication(HttpServletResponse response, String userId) {
-        String Jwt = Jwts.builder()
+        String Jwt = toJwtByUserId(userId);
+        response.setHeader(HEADER_STRING, TOKEN_PREFIX + Jwt);
+    }
+
+    String toJwtByUserId(String userId) {
+        return Jwts.builder()
                 .setSubject(userId)
                 .setExpiration(new Date(System.currentTimeMillis()))
                 .signWith(SignatureAlgorithm.HS512, generateKey(SALT))
                 .compact();
-
-        response.setHeader(HEADER_STRING, TOKEN_PREFIX + Jwt);
     }
 
     boolean isAuthenticationUser(String token) throws UnAuthenticationException {
