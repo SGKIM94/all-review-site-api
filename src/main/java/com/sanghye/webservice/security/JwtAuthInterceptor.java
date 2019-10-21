@@ -21,7 +21,11 @@ public class JwtAuthInterceptor extends HandlerInterceptorAdapter {
 
         log.debug("Authorization : {}", authorization);
 
-        if (authorization == null || !tokenService.isAuthenticationUser(authorization)) {
+        if (authorization == null) {
+            return true;
+        }
+
+        if (!tokenService.isAuthenticationUser(authorization)) {
             return true;
         }
 
