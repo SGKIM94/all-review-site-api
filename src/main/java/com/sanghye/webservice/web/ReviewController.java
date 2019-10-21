@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 
 @Controller
-@RequestMapping("/answers")
+@RequestMapping("/review")
 public class ReviewController {
 
     @Resource(name = "reviewService")
     private ReviewService reviewService;
-
 
     @PostMapping("")
     public String add(@LoginUser User user, long questionId, String contents) {
