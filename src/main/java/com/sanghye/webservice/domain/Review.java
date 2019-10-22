@@ -24,6 +24,10 @@ public class Review extends AbstractEntity implements UrlGeneratable {
     @Lob
     private String contents;
 
+    @Size(min = 3)
+    @Lob
+    private String file;
+
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
     private User writer;
