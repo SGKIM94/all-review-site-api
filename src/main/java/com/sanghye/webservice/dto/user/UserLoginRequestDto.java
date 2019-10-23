@@ -12,13 +12,11 @@ import lombok.Setter;
 public class UserLoginRequestDto {
     private String userId;
     private String password;
-    private String token;
 
     @Builder
-    public UserLoginRequestDto(String userId, String password, String token) {
+    public UserLoginRequestDto(String userId, String password) {
         this.userId = userId;
         this.password = password;
-        this.token = token;
     }
 
     User toEntity(String userId, String password) {
