@@ -54,6 +54,15 @@ public class Review extends AbstractEntity implements UrlGeneratable {
         this.writer = loginUser;
     }
 
+    @Builder
+    public Review(long id, String title, String contents, User loginUser, String file) {
+        super(id);
+        this.title = title;
+        this.contents = contents;
+        this.writer = loginUser;
+        this.file = file;
+    }
+
     public String getTitle() {
         return title;
     }
