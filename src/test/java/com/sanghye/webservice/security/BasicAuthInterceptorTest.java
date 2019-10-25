@@ -47,7 +47,7 @@ public class BasicAuthInterceptorTest extends BaseTest {
         String token = tokenAuthenticationService.toJwtByUserId(userId);
 
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader("Authorization", TOKEN_PREFIX + token);
+        request.addHeader("Authorization", token);
         return request;
     }
 }
