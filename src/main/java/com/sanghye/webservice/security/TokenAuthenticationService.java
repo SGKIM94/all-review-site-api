@@ -21,9 +21,10 @@ public class TokenAuthenticationService {
 
     String toJwtByUserId(String userId) {
         return Jwts.builder()
+                .setHeaderParam("type", "JWT")
                 .setSubject(userId)
-                .setExpiration(new Date(System.currentTimeMillis()))
-                .signWith(SignatureAlgorithm.HS512, generateKey(SALT))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .signWith(SignatureAlgorithm.HS256, this.generateKey(SALT))
                 .compact();
     }
 
