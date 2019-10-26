@@ -29,7 +29,7 @@ public class Review extends AbstractEntity implements UrlGeneratable {
     private String file;
 
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_writer"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_review_writer"))
     private User writer;
 
     @Embedded
