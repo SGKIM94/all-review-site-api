@@ -22,8 +22,8 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
 
         Question question = newQuestion(TITLE, CONTENTS, loginUser);
 
-        ResponseEntity<Void> response = basicAuthTemplate().postForEntity(API_QUESTION_LOCATION, question, Void.class);
-        Question dbQuestion = basicAuthTemplate().getForObject(API_QUESTION_LOCATION, Question.class);
+        ResponseEntity<Void> response = jwtAuthTemplate().postForEntity(API_QUESTION_LOCATION, question, Void.class);
+        Question dbQuestion = jwtAuthTemplate().getForObject(API_QUESTION_LOCATION, Question.class);
 
         softly.assertThat(dbQuestion).isNotNull();
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
@@ -40,7 +40,7 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
         Question updateQuestion = new Question(original.getId(), original.getTitle(), original.getContents(), loginUser);
 
         ResponseEntity<Question> responseEntity =
-                basicAuthTemplate().exchange(location, HttpMethod.PUT, createHttpEntity(updateQuestion), Question.class);
+                jwtAuthTemplate().exchange(location, HttpMethod.PUT, createHttpEntity(updateQuestion), Question.class);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         softly.assertThat(updateQuestion.equals(responseEntity.getBody())).isTrue();
@@ -69,7 +69,7 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
         Question original = getResource(location, Question.class, loginUser);
 
         ResponseEntity<Void> responseEntity
-                = basicAuthTemplate().exchange(location, HttpMethod.DELETE, createHttpEntity(original), Void.class);
+                = jwtAuthTemplate().exchange(location, HttpMethod.DELETE, createHttpEntity(original), Void.class);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
