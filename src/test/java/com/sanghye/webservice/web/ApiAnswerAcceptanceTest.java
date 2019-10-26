@@ -19,7 +19,7 @@ public class ApiAnswerAcceptanceTest extends AcceptanceTest {
     @Test
     public void show() throws Exception {
         String location = createLocation();
-        Answer answer = basicAuthTemplate().getForObject(location, Answer.class);
+        Answer answer = jwtAuthTemplate().getForObject(location, Answer.class);
 
         softly.assertThat(answer).isNotNull();
     }
@@ -30,7 +30,7 @@ public class ApiAnswerAcceptanceTest extends AcceptanceTest {
         String contents = "댓글 내용";
 
         ResponseEntity<Answer> responseEntity =
-                basicAuthTemplate().exchange(location, HttpMethod.PUT, createHttpEntity(contents), Answer.class);
+                jwtAuthTemplate().exchange(location, HttpMethod.PUT, createHttpEntity(contents), Answer.class);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
@@ -40,7 +40,7 @@ public class ApiAnswerAcceptanceTest extends AcceptanceTest {
         String location = createLocation();
 
         ResponseEntity<Answer> responseEntity =
-                basicAuthTemplate().exchange(location, HttpMethod.DELETE, createHttpEntity(""), Answer.class);
+                jwtAuthTemplate().exchange(location, HttpMethod.DELETE, createHttpEntity(""), Answer.class);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
