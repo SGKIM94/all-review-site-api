@@ -4,6 +4,7 @@ import com.sanghye.webservice.converter.LocalDateConverter;
 import com.sanghye.webservice.converter.LocalDateTimeConverter;
 import com.sanghye.webservice.security.JwtAuthInterceptor;
 import com.sanghye.webservice.security.LoginUserHandlerMethodArgumentResolver;
+import com.sanghye.webservice.security.TokenAuthenticationService;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JwtAuthInterceptor())
+        registry.addInterceptor(jwtAuthInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns(INTERCEPTOR_WHITE_LIST);
     }
@@ -53,8 +54,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public JwtAuthInterceptor basicAuthInterceptor() {
-        return new JwtAuthInterceptor();
+    public JwtAuthInterceptor jwtAuthInterceptor() {
+        return new JwtAuthInterceptor(new TokenAuthenticationService());
     }
 
     @Bean

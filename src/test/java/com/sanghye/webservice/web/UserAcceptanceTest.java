@@ -63,7 +63,7 @@ public class UserAcceptanceTest extends AcceptanceTest {
     @Test
     public void updateForm_login() throws Exception {
         User loginUser = defaultUser();
-        ResponseEntity<String> response = basicAuthTemplate(loginUser)
+        ResponseEntity<String> response = jwtAuthTemplate(loginUser)
                 .getForEntity(String.format("/users/%d/form", loginUser.getId()), String.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         softly.assertThat(response.getBody()).contains(defaultUser().getEmail());
@@ -85,7 +85,7 @@ public class UserAcceptanceTest extends AcceptanceTest {
 
     @Test
     public void update() throws Exception {
-        ResponseEntity<String> response = update(basicAuthTemplate());
+        ResponseEntity<String> response = update(jwtAuthTemplate());
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FOUND);
         softly.assertThat(response.getHeaders().getLocation().getPath()).startsWith("/users");
     }
