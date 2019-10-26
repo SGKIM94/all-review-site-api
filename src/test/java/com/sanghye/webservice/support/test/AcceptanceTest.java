@@ -1,15 +1,19 @@
 package com.sanghye.webservice.support.test;
 
 import com.sanghye.webservice.domain.*;
+import com.sanghye.webservice.security.TokenAuthenticationService;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
 import java.util.Optional;
 
 
@@ -32,34 +36,53 @@ public abstract class AcceptanceTest extends BaseTest {
     @Autowired
     private AnswerRepository answerRepository;
 
+    @Autowired
+    private TokenAuthenticationService tokenAuthenticationService;
+
+
     public TestRestTemplate template() {
         return template;
     }
 
-    public TestRestTemplate basicAuthTemplate() {
-        return basicAuthTemplate(defaultUser());
+    public TestRestTemplate jwtAuthTemplate() {
+        return jwtAuthTemplate(defaultUser());
     }
 
-    public TestRestTemplate basicAuthTemplate(User loginUser) {
-        return template.withBasicAuth(loginUser.getUserId(), loginUser.getPassword());
+    public TestRestTemplate jwtAuthTemplate(User loginUser) {
+        String token = tokenAuthenticationService.toJwtByUserId(loginUser.getUserId());
+
+        template.getRestTemplate().setInterceptors(
+                Collections.singletonList((request, body, execution) -> {
+                    addHeader(request, "Authorization", token);
+                    return execution.execute(request, body);
+                }));
+
+        return template;
+    }
+
+    private AcceptanceTest addHeader(HttpRequest request, String key, String value) {
+        request.getHeaders().add(key, value);
+        return this;
     }
 
     protected String foundResource(String path, Object bodyPayload) {
-        ResponseEntity<String> response = basicAuthTemplate().postForEntity(path, bodyPayload, String.class);
+        ResponseEntity<String> response = jwtAuthTemplate().postForEntity(path, bodyPayload, String.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FOUND);
+
+        HttpHeaders data = response.getHeaders();
 
         return response.getHeaders().getLocation().getPath();
     }
 
     protected String createResource(String path, Object bodyPayload) {
-        ResponseEntity<Void> response = basicAuthTemplate().postForEntity(path, bodyPayload, Void.class);
+        ResponseEntity<Void> response = jwtAuthTemplate().postForEntity(path, bodyPayload, Void.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         return response.getHeaders().getLocation().getPath();
     }
 
     protected <T> T getResource(String location, Class<T> responseType, User loginUser) {
-        return basicAuthTemplate(loginUser).getForObject(location, responseType);
+        return jwtAuthTemplate(loginUser).getForObject(location, responseType);
     }
 
     protected User defaultUser() {
