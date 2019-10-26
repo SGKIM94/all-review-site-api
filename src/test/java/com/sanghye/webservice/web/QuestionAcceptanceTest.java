@@ -71,7 +71,7 @@ public class QuestionAcceptanceTest extends AcceptanceTest {
                 .delete()
                 .build();
 
-        ResponseEntity<String> response = basicAuthTemplate().postForEntity(getQuestionPath(FORMAT_PATH_VALUE_ID), request, String.class);
+        ResponseEntity<String> response = jwtAuthTemplate().postForEntity(getQuestionPath(FORMAT_PATH_VALUE_ID), request, String.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 }
