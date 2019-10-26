@@ -18,7 +18,7 @@ public class ApiUserAcceptanceTest extends AcceptanceTest {
         User newUser = newUser("testuser1");
         String location = createResource(API_USER_LOCATION, newUser);
 
-        User dbUser = basicAuthTemplate(findByUserId(newUser.getUserId())).getForObject(location, User.class);
+        User dbUser = jwtAuthTemplate(findByUserId(newUser.getUserId())).getForObject(location, User.class);
         softly.assertThat(dbUser).isNotNull();
     }
 
@@ -29,7 +29,7 @@ public class ApiUserAcceptanceTest extends AcceptanceTest {
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         String location = response.getHeaders().getLocation().getPath();
 
-        response = basicAuthTemplate(defaultUser()).getForEntity(location, Void.class);
+        response = jwtAuthTemplate(defaultUser()).getForEntity(location, Void.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 
@@ -45,7 +45,7 @@ public class ApiUserAcceptanceTest extends AcceptanceTest {
                         "javajigi2", "javajigi2@slipp.net");
 
         ResponseEntity<User> responseEntity =
-                basicAuthTemplate(newUser).exchange(location, HttpMethod.PUT, createHttpEntity(updateUser), User.class);
+                jwtAuthTemplate(newUser).exchange(location, HttpMethod.PUT, createHttpEntity(updateUser), User.class);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         softly.assertThat(updateUser.equalsNameAndEmail(responseEntity.getBody())).isTrue();
@@ -77,7 +77,7 @@ public class ApiUserAcceptanceTest extends AcceptanceTest {
         User updateUser = new User(newUser.getUserId(), "password", "name2", "javajigi@slipp.net2");
 
         ResponseEntity<Void> responseEntity =
-                basicAuthTemplate(defaultUser()).exchange(location, HttpMethod.PUT, createHttpEntity(updateUser), Void.class);
+                jwtAuthTemplate(defaultUser()).exchange(location, HttpMethod.PUT, createHttpEntity(updateUser), Void.class);
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 
