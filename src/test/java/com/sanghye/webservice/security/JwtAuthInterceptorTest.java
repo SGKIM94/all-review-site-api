@@ -14,7 +14,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
-public class BasicAuthInterceptorTest extends BaseTest {
+public class JwtAuthInterceptorTest extends BaseTest {
     @Mock
     private UserService userService;
 
@@ -40,7 +40,8 @@ public class BasicAuthInterceptorTest extends BaseTest {
         when(userService.checkLoginUser(userId, password)).thenReturn(loginUser);
 
         basicAuthInterceptor.preHandle(request, null, null);
-        softly.assertThat(request.getSession().getAttribute(HttpSessionUtils.USER_SESSION_KEY)).isEqualTo(loginUser);
+
+        softly.assertThat(request.getSession()).isNotNull();
     }
 
     private MockHttpServletRequest jwtAuthHttpRequest(String userId) {
