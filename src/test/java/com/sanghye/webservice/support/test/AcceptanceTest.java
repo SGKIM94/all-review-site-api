@@ -69,8 +69,6 @@ public abstract class AcceptanceTest extends BaseTest {
         ResponseEntity<String> response = jwtAuthTemplate().postForEntity(path, bodyPayload, String.class);
         softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FOUND);
 
-        HttpHeaders data = response.getHeaders();
-
         return response.getHeaders().getLocation().getPath();
     }
 
