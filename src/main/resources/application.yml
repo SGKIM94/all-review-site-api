@@ -13,8 +13,6 @@ spring:
     hibernate:
       format_sql: true
 
-  database-platform:  org.hibernate.dialect.H2Dialect
-
 
 
 handlebars:
