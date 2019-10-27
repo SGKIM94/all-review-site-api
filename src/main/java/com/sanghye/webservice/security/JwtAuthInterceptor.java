@@ -19,7 +19,7 @@ public class JwtAuthInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
         String authorization = request.getHeader("Authorization");
 
-        log.debug("Authorization : {}", authorization);
+        log.info("Authorization : {}", authorization);
 
         if (authorization == null) {
             return true;
