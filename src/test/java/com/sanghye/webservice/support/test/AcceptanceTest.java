@@ -48,7 +48,7 @@ public abstract class AcceptanceTest extends BaseTest {
         return jwtAuthTemplate(defaultUser());
     }
 
-    public TestRestTemplate jwtAuthTemplate(User loginUser) {
+    protected TestRestTemplate jwtAuthTemplate(User loginUser) {
         String token = tokenAuthenticationService.toJwtByUserId(loginUser.getUserId());
 
         template.getRestTemplate().setInterceptors(
