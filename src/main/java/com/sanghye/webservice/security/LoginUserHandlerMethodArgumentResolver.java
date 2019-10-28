@@ -23,9 +23,15 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
         }
 
         LoginUser loginUser = parameter.getParameterAnnotation(LoginUser.class);
+
+        if (loginUser == null) {
+            throw new IllegalAccessException("login User is null!");
+        }
+
         if (loginUser.required()) {
             throw new UnAuthenticationException("You're required Login!");
         }
+
         return user;
     }
 }
