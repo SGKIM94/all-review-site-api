@@ -57,7 +57,7 @@ public abstract class AcceptanceTest extends BaseTest {
                     return execution.execute(request, body);
                 }));
 
-        return template;
+        return template.withBasicAuth(loginUser.getUserId(), loginUser.getPassword());
     }
 
     private AcceptanceTest addHeader(HttpRequest request, String key, String value) {
