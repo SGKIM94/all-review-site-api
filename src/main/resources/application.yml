@@ -15,6 +15,7 @@ spring:
 
 
 
+
 handlebars:
   suffix: .html
   cache:  false
