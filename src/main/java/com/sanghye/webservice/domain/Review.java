@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.sanghye.webservice.domain.ContentType.QUESTION;
+import static com.sanghye.webservice.domain.ContentType.REVIEW;
 
 
 @Entity
@@ -114,7 +114,7 @@ public class Review extends AbstractEntity implements UrlGeneratable {
         this.deleted = true;
 
         List<DeleteHistory> deleteHistories = answers.deleteAll(loginUser);
-        deleteHistories.add(new DeleteHistory(QUESTION, this.getId(), loginUser, LocalDateTime.now()));
+        deleteHistories.add(new DeleteHistory(REVIEW, this.getId(), loginUser, LocalDateTime.now()));
         return deleteHistories;
     }
 
