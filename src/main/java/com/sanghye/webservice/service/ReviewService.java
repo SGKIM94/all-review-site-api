@@ -42,7 +42,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public List<DeleteHistory> deleteQuestion(User loginUser, long reviewId) throws CannotDeleteException {
+    public List<DeleteHistory> deleteReview(User loginUser, long reviewId) throws CannotDeleteException {
         Review review = findById(reviewId);
         return review.delete(loginUser);
     }
