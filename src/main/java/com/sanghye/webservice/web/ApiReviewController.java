@@ -2,6 +2,7 @@ package com.sanghye.webservice.web;
 
 import com.sanghye.webservice.CannotDeleteException;
 import com.sanghye.webservice.domain.Answer;
+import com.sanghye.webservice.domain.Review;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.service.ReviewService;
@@ -31,8 +32,8 @@ public class ApiReviewController {
     }
 
     @PutMapping("/{id}")
-    public Answer add(@LoginUser User loginUser, @PathVariable long id, @Valid @RequestBody String contents) {
-        return reviewService.addAnswer(loginUser, id, contents);
+    public Review update(@LoginUser User loginUser, @PathVariable long id, @Valid @RequestBody Review updateAnswer) {
+        return reviewService.update(loginUser, id, updateAnswer);
     }
 
     @DeleteMapping("/{id}")
