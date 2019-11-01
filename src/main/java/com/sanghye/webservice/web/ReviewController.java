@@ -2,6 +2,7 @@ package com.sanghye.webservice.web;
 
 
 import com.sanghye.webservice.CannotDeleteException;
+import com.sanghye.webservice.domain.Review;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.service.QnaService;
@@ -22,8 +23,8 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @PostMapping("")
-    public String add(@LoginUser User user, long questionId, String contents) {
-        reviewService.addAnswer(user, questionId, contents);
+    public String add(@LoginUser User user, Review review) {
+        reviewService.create(user, review);
         return "redirect:/questions";
     }
 
