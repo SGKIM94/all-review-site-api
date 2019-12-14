@@ -35,10 +35,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(UserLoginRequestDto loginDto, HttpServletResponse response) throws UnAuthenticationException {
-        userService.login(loginDto, response);
-
-        log.info("Authorization in header : {}", response.getHeader("Authorization"));
+    public String login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+        userService.login(loginDto);
 
         return "redirect:/questions/list";
     }
