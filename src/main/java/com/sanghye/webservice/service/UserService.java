@@ -54,14 +54,13 @@ public class UserService {
 
     @Transactional(readOnly = true)
     void checkLoginUserToDto(UserLoginRequestDto loginDto) throws UnAuthenticationException {
-        userRepository.findByUserId(loginDto.getUserId())
+        userRepository.findByUserId(loginDto.getEmail())
             .filter(user -> user.matchPassword(loginDto.getPassword()))
             .orElseThrow(UnAuthenticationException::new);
     }
 
     @Transactional(readOnly = true)
-    public void login(UserLoginRequestDto loginDto, HttpServletResponse response) throws UnAuthenticationException {
-        tokenAuthenticationService.addAuthentication(response, loginDto.getUserId());
+    public void login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
         checkLoginUserToDto(loginDto);
     }
 }
