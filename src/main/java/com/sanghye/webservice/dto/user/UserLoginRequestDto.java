@@ -19,9 +19,9 @@ public class UserLoginRequestDto {
         this.password = password;
     }
 
-    User toEntity(String userId, String password) {
+    User toEntity(String email, String password) {
         return User.builder()
-                .userId(userId)
+                .email(email)
                 .password(password)
                 .build();
     }
