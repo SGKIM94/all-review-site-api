@@ -1,6 +1,8 @@
 package com.sanghye.webservice.web;
 
+import com.sanghye.webservice.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
+import com.sanghye.webservice.dto.user.UserLoginRequestDto;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.service.UserService;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,15 @@ public class ApiUserController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/api/users/" + savedUser.getId()));
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@Valid @RequestBody UserLoginRequestDto loginDto) throws UnAuthenticationException {
+        User loginUser = userService.login(loginDto);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/api/users/" + loginUser.getId()));
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
