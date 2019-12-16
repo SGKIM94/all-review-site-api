@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service("userService")
@@ -53,14 +52,14 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    void checkLoginUserToDto(UserLoginRequestDto loginDto) throws UnAuthenticationException {
-        userRepository.findByUserId(loginDto.getEmail())
+    User checkLoginUserToDto(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+        return userRepository.findByUserId(loginDto.getUserId())
             .filter(user -> user.matchPassword(loginDto.getPassword()))
             .orElseThrow(UnAuthenticationException::new);
     }
 
     @Transactional(readOnly = true)
-    public void login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
-        checkLoginUserToDto(loginDto);
+    public User login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+        return checkLoginUserToDto(loginDto);
     }
 }
