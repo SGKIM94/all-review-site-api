@@ -32,4 +32,8 @@ public class UserLoginRequestDto {
                 .password(password)
                 .build();
     }
+
+    public String getUserId() {
+        return this.email.split("@")[0];
+    }
 }
