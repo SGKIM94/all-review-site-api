@@ -14,9 +14,9 @@ import java.util.Objects;
 public class User extends AbstractEntity {
     public static final GuestUser GUEST_USER = new GuestUser();
 
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 20)
     @Column(unique = true, nullable = false)
-    private String email;
+    private String userId;
 
     @Size(min = 3, max = 20)
     @Column(nullable = false)
@@ -26,27 +26,46 @@ public class User extends AbstractEntity {
     @Column(nullable = false)
     private String name;
 
+    @Size(max = 50)
+    private String email;
+
     public User() {
     }
 
     @Builder
-    public User(String password, String name, String email) {
-        this(0L, password, name, email);
+    public User(String email, String password) {
+        this(email, email.split("@")[0], password);
     }
 
     @Builder
-    public User(long id, String email, String password, String name) {
+    public User(String userId, String password, String name, String email) {
+        this(0L, userId, password, name, email);
+    }
+
+    @Builder
+    public User(long id, String userId, String password, String name, String email) {
         super(id);
-        this.email = email;
+        this.userId = userId;
         this.password = password;
         this.name = name;
+        this.email = email;
     }
 
     @Builder
-    public User(String email, String password) {
+    public User(String email, String userId, String password) {
         super(0L);
         this.email = email;
+        this.userId = userId;
         this.password = password;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public User setUserId(String userId) {
+        this.userId = userId;
+        return this;
     }
 
     public String getPassword() {
@@ -77,7 +96,7 @@ public class User extends AbstractEntity {
     }
 
     public void update(User loginUser, User target) {
-        if (!matchUserId(loginUser.getEmail())) {
+        if (!matchUserId(loginUser.getUserId())) {
             throw new UnAuthorizedException();
         }
 
@@ -89,8 +108,8 @@ public class User extends AbstractEntity {
         this.email = target.email;
     }
 
-    private boolean matchUserId(String email) {
-        return this.email.equals(email);
+    private boolean matchUserId(String userId) {
+        return this.userId.equals(userId);
     }
 
     public boolean matchPassword(String targetPassword) {
@@ -120,6 +139,6 @@ public class User extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "User [password=" + password + ", name=" + name + ", email=" + email + "]";
+        return "User [userId=" + userId + ", password=" + password + ", name=" + name + ", email=" + email + "]";
     }
 }
