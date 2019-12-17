@@ -12,6 +12,7 @@ import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,10 +23,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private static String[] INTERCEPTOR_WHITE_LIST = {
             "/home",
             "/base",
+            "/api/users/login",
             "/users/login/",
             "/user/login/",
             "/users/form/"
     };
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:4200");
+    }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
