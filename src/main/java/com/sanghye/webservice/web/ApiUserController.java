@@ -3,7 +3,9 @@ package com.sanghye.webservice.web;
 import com.sanghye.webservice.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.dto.user.UserLoginRequestDto;
+import com.sanghye.webservice.dto.user.UserLoginResponseDto;
 import com.sanghye.webservice.security.LoginUser;
+import com.sanghye.webservice.security.TokenAuthenticationService;
 import com.sanghye.webservice.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,9 @@ public class ApiUserController {
     @Resource(name = "userService")
     private UserService userService;
 
+    @Resource(name = "tokenService")
+    private TokenAuthenticationService tokenAuthenticationService;
+
     @PostMapping("")
     public ResponseEntity<Void> create(@Valid @RequestBody User user) {
         User savedUser = userService.add(user);
@@ -30,12 +35,15 @@ public class ApiUserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@Valid @RequestBody UserLoginRequestDto loginDto) throws UnAuthenticationException {
+    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto loginDto) throws UnAuthenticationException {
         User loginUser = userService.login(loginDto);
+        String token = tokenAuthenticationService.toJwtByUserId(loginUser.getUserId());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/api/users/" + loginUser.getId()));
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        return UserLoginResponseDto.builder()
+                .email(loginUser.getEmail())
+                .token(token)
+                .userId(loginUser.getUserId())
+                .build();
     }
 
     @GetMapping("{id}")
