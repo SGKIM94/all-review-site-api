@@ -11,29 +11,19 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserLoginResponseDto {
     private String email;
-    private String password;
     private String token;
     private String userId;
 
     @Builder
-    public UserLoginResponseDto(String email, String password, String token, String userId) {
+    public UserLoginResponseDto(String email, String token, String userId) {
         this.email = email;
-        this.password = password;
         this.token = token;
         this.userId = userId;
     }
 
-    User toEntity(String email, String password) {
-        return User.builder()
-                .email(email)
-                .password(password)
-                .build();
-    }
-
-    public UserLoginResponseDto toDtoEntity(String email, String password, String token, String userId) {
+    public UserLoginResponseDto toDtoEntity(String email, String token, String userId) {
         return UserLoginResponseDto.builder()
                 .email(email)
-                .password(password)
                 .token(token)
                 .userId(userId)
                 .build();
