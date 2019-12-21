@@ -59,7 +59,7 @@ public class ApiUserController {
         return userService.update(loginUser, id, updatedUser);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(UnAuthenticationException.class)
     public String UnAuthenticationExceptionHandler() {
         log.error("존재하지 않는 유저입니다.");
         return "UnAuthenticationException";
