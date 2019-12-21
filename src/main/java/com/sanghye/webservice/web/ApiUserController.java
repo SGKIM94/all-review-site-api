@@ -7,6 +7,7 @@ import com.sanghye.webservice.dto.user.UserLoginResponseDto;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.security.TokenAuthenticationService;
 import com.sanghye.webservice.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.net.URI;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 public class ApiUserController {
@@ -37,6 +39,7 @@ public class ApiUserController {
     @PostMapping("/login")
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto loginDto) throws UnAuthenticationException {
         User loginUser = userService.login(loginDto);
+
         String token = tokenAuthenticationService.toJwtByUserId(loginUser.getUserId());
 
         return UserLoginResponseDto.builder()
@@ -54,5 +57,11 @@ public class ApiUserController {
     @PutMapping("{id}")
     public User update(@LoginUser User loginUser, @PathVariable long id, @Valid @RequestBody User updatedUser) {
         return userService.update(loginUser, id, updatedUser);
+    }
+
+    @ExceptionHandler
+    public String UnAuthenticationExceptionHandler() {
+        log.error("존재하지 않는 유저입니다.");
+        return "UnAuthenticationException";
     }
 }
