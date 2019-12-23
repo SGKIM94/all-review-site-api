@@ -21,11 +21,11 @@ public class UserLoginResponseDto {
         this.userId = userId;
     }
 
-    public UserLoginResponseDto toDtoEntity(String email, String token, String userId) {
+    public static UserLoginResponseDto toDtoEntity(User loginUser, String token) {
         return UserLoginResponseDto.builder()
-                .email(email)
+                .email(loginUser.getEmail())
                 .token(token)
-                .userId(userId)
+                .userId(loginUser.getUserId())
                 .build();
     }
 
