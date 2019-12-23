@@ -17,4 +17,10 @@ public class RestControllerAdvice {
         log.error("서버에 오류가 발생하였습니다.");
         return "/error/exception";
     }
+
+    @ExceptionHandler(UnAuthenticationException.class)
+    public String UnAuthenticationExceptionHandler() {
+        log.error("존재하지 않는 유저입니다.");
+        return "UnAuthenticationException";
+    }
 }
