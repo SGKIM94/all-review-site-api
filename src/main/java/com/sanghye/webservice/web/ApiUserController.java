@@ -39,14 +39,8 @@ public class ApiUserController {
     @PostMapping("/login")
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto loginDto) throws UnAuthenticationException {
         User loginUser = userService.login(loginDto);
-
         String token = tokenAuthenticationService.toJwtByUserId(loginUser.getUserId());
-
-        return UserLoginResponseDto.builder()
-                .email(loginUser.getEmail())
-                .token(token)
-                .userId(loginUser.getUserId())
-                .build();
+        return UserLoginResponseDto.toDtoEntity(loginUser, token);
     }
 
     @GetMapping("{id}")
@@ -57,11 +51,5 @@ public class ApiUserController {
     @PutMapping("{id}")
     public User update(@LoginUser User loginUser, @PathVariable long id, @Valid @RequestBody User updatedUser) {
         return userService.update(loginUser, id, updatedUser);
-    }
-
-    @ExceptionHandler(UnAuthenticationException.class)
-    public String UnAuthenticationExceptionHandler() {
-        log.error("존재하지 않는 유저입니다.");
-        return "UnAuthenticationException";
     }
 }
