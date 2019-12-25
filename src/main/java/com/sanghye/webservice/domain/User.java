@@ -1,7 +1,7 @@
 package com.sanghye.webservice.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sanghye.webservice.UnAuthorizedException;
+import com.sanghye.webservice.exception.UnAuthorizedException;
 import com.sanghye.webservice.support.domain.AbstractEntity;
 import lombok.Builder;
 

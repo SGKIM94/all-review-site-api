@@ -1,7 +1,7 @@
 package com.sanghye.webservice.security;
 
-import com.sanghye.webservice.UnAuthenticationException;
-import com.sanghye.webservice.UnAuthorizedException;
+import com.sanghye.webservice.exception.UnAuthenticationException;
+import com.sanghye.webservice.exception.UnAuthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

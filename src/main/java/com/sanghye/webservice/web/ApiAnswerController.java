@@ -1,6 +1,6 @@
 package com.sanghye.webservice.web;
 
-import com.sanghye.webservice.CannotDeleteException;
+import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.domain.Answer;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.security.LoginUser;
@@ -8,7 +8,6 @@ import com.sanghye.webservice.service.QnaService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

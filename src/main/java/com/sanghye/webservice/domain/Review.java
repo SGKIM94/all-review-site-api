@@ -1,7 +1,7 @@
 package com.sanghye.webservice.domain;
 
 
-import com.sanghye.webservice.UnAuthorizedException;
+import com.sanghye.webservice.exception.UnAuthorizedException;
 import com.sanghye.webservice.support.domain.AbstractEntity;
 import com.sanghye.webservice.support.domain.UrlGeneratable;
 import lombok.Builder;

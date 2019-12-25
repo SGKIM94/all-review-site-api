@@ -1,6 +1,6 @@
 package com.sanghye.webservice.service;
 
-import com.sanghye.webservice.CannotDeleteException;
+import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

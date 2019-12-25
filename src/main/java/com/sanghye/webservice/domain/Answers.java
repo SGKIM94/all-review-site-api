@@ -1,6 +1,6 @@
 package com.sanghye.webservice.domain;
 
-import com.sanghye.webservice.UnAuthorizedException;
+import com.sanghye.webservice.exception.UnAuthorizedException;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.Embeddable;

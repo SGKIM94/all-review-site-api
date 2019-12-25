@@ -1,4 +1,4 @@
-package com.sanghye.webservice;
+package com.sanghye.webservice.exception;
 
 public class UnAuthenticationException extends Exception {
     private static final long serialVersionUID = 1L;

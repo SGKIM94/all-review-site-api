@@ -1,6 +1,6 @@
 package com.sanghye.webservice.security;
 
-import com.sanghye.webservice.UnAuthenticationException;
+import com.sanghye.webservice.exception.UnAuthenticationException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.sanghye.webservice.security;
 
-import com.sanghye.webservice.UnAuthenticationException;
+import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

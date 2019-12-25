@@ -1,12 +1,12 @@
 package com.sanghye.webservice.web;
 
-import com.sanghye.webservice.UnAuthenticationException;
+import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.dto.user.UserLoginRequestDto;
-import com.sanghye.webservice.dto.user.UserLoginResponseDto;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.security.TokenAuthenticationService;
 import com.sanghye.webservice.service.UserService;
+import com.sanghye.webservice.support.domain.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,10 +37,11 @@ public class ApiUserController {
     }
 
     @PostMapping("/login")
-    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto loginDto) throws UnAuthenticationException {
+    public ResponseEntity<BaseResponse> login(@RequestBody UserLoginRequestDto loginDto) throws UnAuthenticationException {
         User loginUser = userService.login(loginDto);
         String token = tokenAuthenticationService.toJwtByUserId(loginUser.getUserId());
-        return UserLoginResponseDto.toDtoEntity(loginUser, token);
+
+        return new ResponseEntity<>(new BaseResponse(token), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
