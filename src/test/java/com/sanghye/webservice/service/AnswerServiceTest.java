@@ -1,6 +1,6 @@
 package com.sanghye.webservice.service;
 
-import com.sanghye.webservice.UnAuthorizedException;
+import com.sanghye.webservice.exception.UnAuthorizedException;
 import com.sanghye.webservice.domain.*;
 import com.sanghye.webservice.support.test.BaseTest;
 import org.junit.Test;

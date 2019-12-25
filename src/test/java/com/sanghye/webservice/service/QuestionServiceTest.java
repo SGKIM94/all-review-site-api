@@ -1,6 +1,6 @@
 package com.sanghye.webservice.service;
 
-import com.sanghye.webservice.CannotDeleteException;
+import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.domain.Question;
 import com.sanghye.webservice.domain.QuestionRepository;
 import com.sanghye.webservice.domain.User;

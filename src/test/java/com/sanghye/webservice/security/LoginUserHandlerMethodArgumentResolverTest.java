@@ -1,6 +1,6 @@
 package com.sanghye.webservice.security;
 
-import com.sanghye.webservice.UnAuthenticationException;
+import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.support.test.BaseTest;
 import org.junit.Before;
