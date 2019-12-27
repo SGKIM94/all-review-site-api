@@ -11,7 +11,7 @@ public class BaseResponse {
     private String message;
     private Object information;
 
-    public BaseResponse() {
+    private BaseResponse() {
         this.code = SUCCESS.getCode();
         this.message = SUCCESS.getMessage();
     }
