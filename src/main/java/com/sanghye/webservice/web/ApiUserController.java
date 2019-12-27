@@ -33,14 +33,13 @@ public class ApiUserController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/api/users/" + savedUser.getId()));
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<BaseResponse> login(@RequestBody UserLoginRequestDto loginDto) throws UnAuthenticationException {
         User loginUser = userService.login(loginDto);
         String token = tokenAuthenticationService.toJwtByUserId(loginUser.getUserId());
-
         return new ResponseEntity<>(new BaseResponse(token), HttpStatus.OK);
     }
 
