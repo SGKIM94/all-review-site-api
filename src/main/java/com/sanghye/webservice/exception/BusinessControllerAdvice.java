@@ -14,12 +14,12 @@ import static com.sanghye.webservice.support.domain.ResponseCode.NO_AUTHENTICATI
 
 @Slf4j
 @ControllerAdvice(annotations = Controller.class)
-@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
+//@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
 public class BusinessControllerAdvice {
 
     @ExceptionHandler(UnAuthenticationException.class)
     public ResponseEntity<ErrorResponse> UnAuthenticationExceptionHandler() {
         log.error("존재하지 않는 유저입니다.");
-        return new ResponseEntity<>(new ErrorResponse(NO_AUTHENTICATION), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorResponse(NO_AUTHENTICATION), HttpStatus.OK);
     }
 }
