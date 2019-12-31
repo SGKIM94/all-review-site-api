@@ -51,7 +51,6 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    @Builder
     public User(String email, String userId, String password) {
         super(0L);
         this.email = email;
