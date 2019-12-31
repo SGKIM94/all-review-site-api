@@ -9,35 +9,43 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-//TODO : 회원 가입 시 값 받는 DTO 만들기
 public class UserRegisterRequestDto {
     private String email;
     private String password;
     private String name;
     private String mobile;
-    private String passwordConfirm;
 
     @Builder
-    public UserRegisterRequestDto(String email, String password) {
+    public UserRegisterRequestDto(String email, String password, String name, String mobile) {
         this.email = email;
         this.password = password;
+        this.name = name;
+        this.mobile = mobile;
     }
 
-    User toEntity(String email, String password) {
+    public User toEntity(UserRegisterRequestDto dto) {
         return User.builder()
-                .email(email)
-                .password(password)
+                .userId(makeUserIdByEmail(dto.getEmail()))
+                .password(dto.getPassword())
+                .name(dto.getName())
+                .email(dto.getEmail())
                 .build();
     }
 
-    public UserRegisterRequestDto toDtoEntity(String email, String password) {
+    public UserRegisterRequestDto toDtoEntity(String email, String password, String name, String mobile) {
         return UserRegisterRequestDto.builder()
                 .email(email)
                 .password(password)
+                .name(name)
+                .mobile(mobile)
                 .build();
     }
 
     public String getUserId() {
-        return this.email.split("@")[0];
+        return makeUserIdByEmail(this.email);
+    }
+
+    private String makeUserIdByEmail(String email) {
+        return email.split("@")[0];
     }
 }
