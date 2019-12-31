@@ -20,7 +20,7 @@ public class UserLoginRequestDto {
     }
 
     User toEntity(String email, String password) {
-        return User.builder()
+        return User.LoginBuilder()
                 .email(email)
                 .password(password)
                 .build();
