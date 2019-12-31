@@ -24,7 +24,7 @@ public class UserRegisterRequestDto {
     }
 
     public User toEntity(UserRegisterRequestDto dto) {
-        return User.builder()
+        return User.RegisterBuilder()
                 .userId(makeUserIdByEmail(dto.getEmail()))
                 .password(dto.getPassword())
                 .name(dto.getName())
