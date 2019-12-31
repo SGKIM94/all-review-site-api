@@ -1,5 +1,6 @@
 package com.sanghye.webservice.web;
 
+import com.sanghye.webservice.dto.user.UserRegisterRequestDto;
 import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.dto.user.UserLoginRequestDto;
@@ -28,12 +29,9 @@ public class ApiUserController {
     private TokenAuthenticationService tokenAuthenticationService;
 
     @PostMapping("")
-    public ResponseEntity<Void> create(@Valid @RequestBody User user) {
-        User savedUser = userService.add(user);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/api/users/" + savedUser.getId()));
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    public ResponseEntity<BaseResponse> create(@Valid @RequestBody UserRegisterRequestDto user) {
+        User savedUser = userService.addByRegisterRequestDto(user);
+        return new ResponseEntity<>(new BaseResponse(savedUser), HttpStatus.OK);
     }
 
     @PostMapping("/login")
