@@ -1,6 +1,7 @@
 package com.sanghye.webservice.service;
 
 import com.sanghye.webservice.dto.user.UserRegisterRequestDto;
+import com.sanghye.webservice.dto.user.UserRegisterResponseDto;
 import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.exception.UnAuthorizedException;
 import com.sanghye.webservice.domain.User;
@@ -27,8 +28,9 @@ public class UserService {
     }
 
     @Transactional
-    public User addByRegisterRequestDto(UserRegisterRequestDto user) {
-        return userRepository.save(user.toEntity(user));
+    public UserRegisterResponseDto addByRegisterRequestDto(UserRegisterRequestDto user) {
+        User saveUser = userRepository.save(user.toEntity(user));
+        return UserRegisterResponseDto.toDtoEntity(saveUser);
     }
 
     @Transactional
