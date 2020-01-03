@@ -31,8 +31,8 @@ public class ApiUserController {
 
     @PostMapping("")
     public ResponseEntity<BaseResponse> create(@Valid @RequestBody UserRegisterRequestDto user) {
-        User savedUser = userService.addByRegisterRequestDto(user);
-        return new ResponseEntity<>(new BaseResponse(UserRegisterResponseDto.toDtoEntity(savedUser)), HttpStatus.OK);
+        UserRegisterResponseDto savedUser = userService.addByRegisterRequestDto(user);
+        return new ResponseEntity<>(new BaseResponse(savedUser), HttpStatus.OK);
     }
 
     @PostMapping("/login")
