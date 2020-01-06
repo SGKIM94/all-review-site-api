@@ -23,15 +23,6 @@ public class UserRegisterResponseDto {
         this.mobile = mobile;
     }
 
-    public User toEntity(UserRegisterResponseDto dto) {
-        return User.RegisterBuilder()
-                .userId(makeUserIdByEmail(dto.getEmail()))
-                .password(dto.getPassword())
-                .name(dto.getName())
-                .email(dto.getEmail())
-                .build();
-    }
-
     public static UserRegisterResponseDto toDtoEntity(User user) {
         return UserRegisterResponseDto.builder()
                 .email(user.getEmail())
