@@ -2,6 +2,7 @@ package com.sanghye.webservice.service;
 
 import com.sanghye.webservice.dto.user.UserRegisterRequestDto;
 import com.sanghye.webservice.dto.user.UserRegisterResponseDto;
+import com.sanghye.webservice.exception.DuplicateUserException;
 import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.exception.UnAuthorizedException;
 import com.sanghye.webservice.domain.User;
@@ -31,6 +32,16 @@ public class UserService {
     public UserRegisterResponseDto addByRegisterRequestDto(UserRegisterRequestDto user) {
         User saveUser = userRepository.save(user.toEntity(user));
         return UserRegisterResponseDto.toDtoEntity(saveUser);
+    }
+
+    public void checkUserExist(String userId) {
+        if (isExistUser(userId)) {
+            throw new DuplicateUserException("이미 존재하는 유저입니다.");
+        }
+    }
+
+    private boolean isExistUser(String userId) {
+        return userRepository.findByUserId(userId).isPresent();
     }
 
     @Transactional
