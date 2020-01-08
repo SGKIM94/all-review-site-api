@@ -3,7 +3,8 @@ package com.sanghye.webservice.support.domain;
 public enum  ResponseCode {
     SUCCESS("200", "success"),
     ERROR("999", "fail"),
-    NO_AUTHENTICATION("998", "invalid user");
+    NO_AUTHENTICATION("998", "invalid user"),
+    DUPLICATE_USER("997", "duplicate user");
 
     private String code;
     private String message;
