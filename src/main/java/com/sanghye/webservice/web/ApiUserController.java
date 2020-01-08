@@ -2,6 +2,7 @@ package com.sanghye.webservice.web;
 
 import com.sanghye.webservice.dto.user.UserRegisterRequestDto;
 import com.sanghye.webservice.dto.user.UserRegisterResponseDto;
+import com.sanghye.webservice.exception.DuplicateUserException;
 import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.dto.user.UserLoginRequestDto;
@@ -31,6 +32,7 @@ public class ApiUserController {
 
     @PostMapping("")
     public ResponseEntity<BaseResponse> create(@Valid @RequestBody UserRegisterRequestDto user) {
+        userService.checkUserExist(user.getUserId());
         UserRegisterResponseDto savedUser = userService.addByRegisterRequestDto(user);
         return new ResponseEntity<>(new BaseResponse(savedUser), HttpStatus.OK);
     }
