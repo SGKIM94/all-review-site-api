@@ -32,12 +32,12 @@ public class User extends AbstractEntity {
     public User() {
     }
 
-    @Builder(builderMethodName = "LoginBuilder")
+    @Builder(builderClassName = "LoginBuilder", builderMethodName = "LoginBuilder")
     public User(String email, String password) {
         this(email, email.split("@")[0], password);
     }
 
-    @Builder(builderMethodName = "RegisterBuilder")
+    @Builder(builderClassName = "RegisterBuilder", builderMethodName = "RegisterBuilder")
     public User(String userId, String password, String name, String email) {
         this(0L, userId, password, name, email);
     }
