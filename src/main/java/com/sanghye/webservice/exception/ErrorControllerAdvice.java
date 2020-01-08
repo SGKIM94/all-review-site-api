@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import static com.sanghye.webservice.support.domain.ResponseCode.NO_AUTHENTICATION;
 
 @Slf4j
-@ControllerAdvice(annotations = Controller.class)
+@ControllerAdvice
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class ErrorControllerAdvice {
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> exception() {
         log.error("서버에 오류가 발생하였습니다.");
