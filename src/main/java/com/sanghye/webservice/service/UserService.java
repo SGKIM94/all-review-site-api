@@ -20,9 +20,6 @@ public class UserService {
     @Resource(name = "userRepository")
     private UserRepository userRepository;
 
-    @Resource(name = "tokenService")
-    private TokenAuthenticationService tokenAuthenticationService;
-
     @Transactional
     public User add(User user) {
         return userRepository.save(user);
