@@ -13,7 +13,7 @@ public class UserLoginRequestDtoTest extends BaseTest {
         String password = "123456";
 
         //when
-        User user = new UserLoginRequestDto().toEntity(userId, password);
+        User user = new LoginRequestDto().toEntity(userId, password);
 
         //then
         softly.assertThat(user.getUserId()).isEqualTo("sanggu");

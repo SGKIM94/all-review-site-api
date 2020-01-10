@@ -9,22 +9,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserRegisterResponseDto {
+public class RegisterResponseDto {
     private String email;
     private String password;
     private String name;
     private String mobile;
 
     @Builder
-    public UserRegisterResponseDto(String email, String password, String name, String mobile) {
+    public RegisterResponseDto(String email, String password, String name, String mobile) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.mobile = mobile;
     }
 
-    public static UserRegisterResponseDto toDtoEntity(User user) {
-        return UserRegisterResponseDto.builder()
+    public static RegisterResponseDto toDtoEntity(User user) {
+        return RegisterResponseDto.builder()
                 .email(user.getEmail())
                 .name(user.getName())
                 .build();

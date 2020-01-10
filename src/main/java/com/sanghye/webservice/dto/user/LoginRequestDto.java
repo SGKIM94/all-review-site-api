@@ -9,12 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserLoginRequestDto {
+public class LoginRequestDto {
     private String email;
     private String password;
 
     @Builder
-    public UserLoginRequestDto(String email, String password) {
+    public LoginRequestDto(String email, String password) {
         this.email = email;
         this.password = password;
     }
@@ -26,8 +26,8 @@ public class UserLoginRequestDto {
                 .build();
     }
 
-    public UserLoginRequestDto toDtoEntity(String email, String password) {
-        return UserLoginRequestDto.builder()
+    public LoginRequestDto toDtoEntity(String email, String password) {
+        return LoginRequestDto.builder()
                 .email(email)
                 .password(password)
                 .build();

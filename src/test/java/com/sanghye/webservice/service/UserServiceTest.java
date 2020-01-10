@@ -3,7 +3,7 @@ package com.sanghye.webservice.service;
 import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.domain.UserRepository;
-import com.sanghye.webservice.dto.user.UserLoginRequestDto;
+import com.sanghye.webservice.dto.user.LoginRequestDto;
 import com.sanghye.webservice.support.test.BaseTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,7 +52,7 @@ public class UserServiceTest extends BaseTest {
     public void UserLoginRequestDto_를_인자로받아서_login_이_되는가() throws UnAuthenticationException {
         //given
         String userId = "sangu";
-        UserLoginRequestDto user = new UserLoginRequestDto().toDtoEntity(userId, "1234");
+        LoginRequestDto user = new LoginRequestDto().toDtoEntity(userId, "1234");
 
         //when
         when(userRepository.findByUserId(userId)).thenReturn(Optional.of(SANGGU));
