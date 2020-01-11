@@ -88,11 +88,6 @@ public class User extends AbstractEntity {
         return email;
     }
 
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
     public void update(User loginUser, User target) {
         if (!matchUserId(loginUser.getUserId())) {
             throw new UnAuthorizedException();
