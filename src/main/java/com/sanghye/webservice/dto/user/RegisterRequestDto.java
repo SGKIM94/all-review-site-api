@@ -9,21 +9,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserRegisterRequestDto {
+public class RegisterRequestDto {
     private String email;
     private String password;
     private String name;
     private String mobile;
 
     @Builder
-    public UserRegisterRequestDto(String email, String password, String name, String mobile) {
+    public RegisterRequestDto(String email, String password, String name, String mobile) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.mobile = mobile;
     }
 
-    public User toEntity(UserRegisterRequestDto dto) {
+    public User toEntity(RegisterRequestDto dto) {
         return User.RegisterBuilder()
                 .userId(makeUserIdByEmail(dto.getEmail()))
                 .password(dto.getPassword())
@@ -32,8 +32,8 @@ public class UserRegisterRequestDto {
                 .build();
     }
 
-    public UserRegisterRequestDto toDtoEntity(String email, String password, String name, String mobile) {
-        return UserRegisterRequestDto.builder()
+    public RegisterRequestDto toDtoEntity(String email, String password, String name, String mobile) {
+        return RegisterRequestDto.builder()
                 .email(email)
                 .password(password)
                 .name(name)

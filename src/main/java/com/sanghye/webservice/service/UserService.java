@@ -1,14 +1,13 @@
 package com.sanghye.webservice.service;
 
-import com.sanghye.webservice.dto.user.UserRegisterRequestDto;
-import com.sanghye.webservice.dto.user.UserRegisterResponseDto;
+import com.sanghye.webservice.domain.User;
+import com.sanghye.webservice.domain.UserRepository;
+import com.sanghye.webservice.dto.user.LoginRequestDto;
+import com.sanghye.webservice.dto.user.RegisterRequestDto;
+import com.sanghye.webservice.dto.user.RegisterResponseDto;
 import com.sanghye.webservice.exception.DuplicateUserException;
 import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.exception.UnAuthorizedException;
-import com.sanghye.webservice.domain.User;
-import com.sanghye.webservice.domain.UserRepository;
-import com.sanghye.webservice.dto.user.UserLoginRequestDto;
-import com.sanghye.webservice.security.TokenAuthenticationService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,18 +19,15 @@ public class UserService {
     @Resource(name = "userRepository")
     private UserRepository userRepository;
 
-    @Resource(name = "tokenService")
-    private TokenAuthenticationService tokenAuthenticationService;
-
     @Transactional
     public User add(User user) {
         return userRepository.save(user);
     }
 
     @Transactional
-    public UserRegisterResponseDto addByRegisterRequestDto(UserRegisterRequestDto user) {
+    public RegisterResponseDto addByRegisterRequestDto(RegisterRequestDto user) {
         User saveUser = userRepository.save(user.toEntity(user));
-        return UserRegisterResponseDto.toDtoEntity(saveUser);
+        return RegisterResponseDto.toDtoEntity(saveUser);
     }
 
     public void checkUserExist(String userId) {
@@ -71,14 +67,14 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    User checkLoginUserToDto(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+    User checkLoginUserToDto(LoginRequestDto loginDto) throws UnAuthenticationException {
         return userRepository.findByUserId(loginDto.getUserId())
             .filter(user -> user.matchPassword(loginDto.getPassword()))
             .orElseThrow(UnAuthenticationException::new);
     }
 
     @Transactional(readOnly = true)
-    public User login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+    public User login(LoginRequestDto loginDto) throws UnAuthenticationException {
         return checkLoginUserToDto(loginDto);
     }
 }

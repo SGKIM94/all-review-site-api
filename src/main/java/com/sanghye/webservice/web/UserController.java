@@ -2,7 +2,7 @@ package com.sanghye.webservice.web;
 
 import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.domain.User;
-import com.sanghye.webservice.dto.user.UserLoginRequestDto;
+import com.sanghye.webservice.dto.user.LoginRequestDto;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.service.UserService;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(UserLoginRequestDto loginDto) throws UnAuthenticationException {
+    public String login(LoginRequestDto loginDto) throws UnAuthenticationException {
         userService.login(loginDto);
         return "redirect:/questions/list";
     }
