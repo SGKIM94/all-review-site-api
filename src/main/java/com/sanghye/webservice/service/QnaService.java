@@ -1,5 +1,6 @@
 package com.sanghye.webservice.service;
 
+import com.sanghye.webservice.dto.question.RegisterRequestDto;
 import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.domain.*;
 import org.slf4j.Logger;
@@ -25,7 +26,9 @@ public class QnaService {
     @Resource(name = "deleteHistoryService")
     private DeleteHistoryService deleteHistoryService;
 
-    public Question create(User loginUser, Question question) {
+    public Question create(User loginUser, RegisterRequestDto request) {
+        Question question = request.toEntity(request);
+
         question.writeBy(loginUser);
         log.debug("question : {}", question);
         return questionRepository.save(question);
