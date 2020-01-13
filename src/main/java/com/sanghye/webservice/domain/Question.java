@@ -68,12 +68,11 @@ public class Question extends AbstractEntity implements UrlGeneratable {
         return this;
     }
 
-
     public void writeBy(User loginUser) {
         this.writer = loginUser;
     }
 
-    public boolean isOwner(User loginUser) {
+    private boolean isOwner(User loginUser) {
         return writer.equals(loginUser);
     }
 
