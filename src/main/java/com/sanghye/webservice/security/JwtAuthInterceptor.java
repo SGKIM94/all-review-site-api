@@ -1,5 +1,6 @@
 package com.sanghye.webservice.security;
 
+import com.sanghye.webservice.exception.UnAuthenticationException;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +22,12 @@ public class JwtAuthInterceptor extends HandlerInterceptorAdapter {
 
         log.info("Authorization : {}", authorization);
 
-        if (authorization == null) {
-            return true;
+         if (authorization == null) {
+            throw new UnAuthenticationException("토큰이 존재하지 않습니다.");
         }
 
         if (!tokenService.isAuthenticationUser(authorization)) {
-            return true;
+            throw new UnAuthenticationException("토큰이 유효하지 않습니다.");
         }
 
         return true;
