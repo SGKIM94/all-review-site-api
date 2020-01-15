@@ -1,6 +1,8 @@
-package com.sanghye.webservice.exception;
+package com.sanghye.webservice.support.aspect;
 
 
+import com.sanghye.webservice.exception.DuplicateUserException;
+import com.sanghye.webservice.exception.UnAuthenticationException;
 import com.sanghye.webservice.support.domain.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

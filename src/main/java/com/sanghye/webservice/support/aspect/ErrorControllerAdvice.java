@@ -1,4 +1,4 @@
-package com.sanghye.webservice.exception;
+package com.sanghye.webservice.support.aspect;
 
 
 import com.sanghye.webservice.support.domain.ErrorResponse;
