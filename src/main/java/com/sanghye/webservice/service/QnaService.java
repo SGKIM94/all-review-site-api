@@ -27,7 +27,7 @@ public class QnaService {
     private DeleteHistoryService deleteHistoryService;
 
     public Question create(User loginUser, RegisterRequestDto request) {
-        Question question = request.toEntity(request);
+        Question question = request.toEntity(request.getTitle(), request.getContents());
 
         question.writeBy(loginUser);
         log.debug("question : {}", question);
