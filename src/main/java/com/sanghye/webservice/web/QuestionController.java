@@ -1,5 +1,6 @@
 package com.sanghye.webservice.web;
 
+import com.sanghye.webservice.dto.question.RegisterRequestDto;
 import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.domain.Question;
 import com.sanghye.webservice.domain.User;
@@ -29,8 +30,8 @@ public class QuestionController {
     }
 
     @PostMapping("")
-    public String create(@LoginUser User user, String title, String contents) {
-        qnaService.create(user, new Question(title, contents));
+    public String create(@LoginUser User user, RegisterRequestDto question) {
+        qnaService.create(user, question);
         return "redirect:/questions/form";
     }
 
