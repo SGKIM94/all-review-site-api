@@ -21,10 +21,10 @@ public class RegisterRequestDto {
         this.writer = writer;
     }
 
-    public Question toEntity(RegisterRequestDto dto) {
+    public Question toEntity(String title, String contents) {
         return Question.builder()
-                .title(dto.getTitle())
-                .contents(dto.getContents())
+                .title(title)
+                .contents(contents)
                 .build();
     }
 
