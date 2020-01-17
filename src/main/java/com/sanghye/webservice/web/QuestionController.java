@@ -6,9 +6,12 @@ import com.sanghye.webservice.domain.Question;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.service.QnaService;
+import com.sanghye.webservice.support.domain.BaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,12 +39,12 @@ public class QuestionController {
     }
 
     @GetMapping("/list")
-    public String list(Model model, Pageable pageable) {
+    public ResponseEntity<BaseResponse> list(Model model, Pageable pageable) {
         List<Question> questions = qnaService.findAll(pageable);
         log.debug("question size : {}", questions.size());
 
         model.addAttribute("questions", questions);
-        return "/home";
+        return new ResponseEntity<>(new BaseResponse(model), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/form")
