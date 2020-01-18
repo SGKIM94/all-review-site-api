@@ -2,6 +2,7 @@ package com.sanghye.webservice.security;
 
 import com.sanghye.webservice.exception.UnAuthenticationException;
 import lombok.AllArgsConstructor;
+import org.apache.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,8 +18,7 @@ public class JwtAuthInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
-        String authorization = request.getHeader("Authorization");
+            throws Exception {String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         log.info("Authorization : {}", authorization);
 
