@@ -17,8 +17,9 @@ import static com.sanghye.webservice.support.domain.ResponseCode.NO_AUTHENTICATI
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 public class ErrorControllerAdvice {
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> exception() {
+    public ResponseEntity<ErrorResponse> exception(Exception e) {
         log.error("서버에 오류가 발생하였습니다.");
+        e.printStackTrace();
         return new ResponseEntity<>(new ErrorResponse(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
