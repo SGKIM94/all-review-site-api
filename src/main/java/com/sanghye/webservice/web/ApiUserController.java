@@ -1,10 +1,10 @@
 package com.sanghye.webservice.web;
 
+import com.sanghye.webservice.domain.User;
+import com.sanghye.webservice.dto.user.LoginRequestDto;
 import com.sanghye.webservice.dto.user.RegisterRequestDto;
 import com.sanghye.webservice.dto.user.RegisterResponseDto;
 import com.sanghye.webservice.exception.UnAuthenticationException;
-import com.sanghye.webservice.domain.User;
-import com.sanghye.webservice.dto.user.LoginRequestDto;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.security.TokenAuthenticationService;
 import com.sanghye.webservice.service.UserService;
@@ -38,7 +38,8 @@ public class ApiUserController {
     public ResponseEntity<BaseResponse> login(@RequestBody LoginRequestDto loginDto) throws UnAuthenticationException {
         User loginUser = userService.login(loginDto);
         String token = tokenAuthenticationService.toJwtByUserId(loginUser.getUserId());
-        return new ResponseEntity<>(new BaseResponse(token), HttpStatus.OK);
+        return new ResponseEntity<>
+                (new BaseResponse(userService.makeLoginResponseDto(loginUser, token)), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
