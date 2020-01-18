@@ -3,6 +3,7 @@ package com.sanghye.webservice.service;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.domain.UserRepository;
 import com.sanghye.webservice.dto.user.LoginRequestDto;
+import com.sanghye.webservice.dto.user.LoginResponseDto;
 import com.sanghye.webservice.dto.user.RegisterRequestDto;
 import com.sanghye.webservice.dto.user.RegisterResponseDto;
 import com.sanghye.webservice.exception.DuplicateUserException;
@@ -76,5 +77,9 @@ public class UserService {
     @Transactional(readOnly = true)
     public User login(LoginRequestDto loginDto) throws UnAuthenticationException {
         return checkLoginUserToDto(loginDto);
+    }
+
+    public LoginResponseDto makeLoginResponseDto(User loginUser, String token) {
+        return LoginResponseDto.toDtoEntity(loginUser, token);
     }
 }
