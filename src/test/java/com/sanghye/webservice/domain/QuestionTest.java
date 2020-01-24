@@ -95,4 +95,15 @@ public class QuestionTest extends BaseTest {
         softly.assertThat(firstAnswer.isDeleted()).isEqualTo(true);
         softly.assertThat(secondAnswer.isDeleted()).isEqualTo(true);
     }
+
+    @Test
+    public void JSON_형태의_값을_Array_형태로_변환하는지() {
+        //given
+
+        //when
+        Question.convertFromJsonArrayTodoubleArray();
+
+        //then
+        softly.assertThat().isEqaulTo();
+    }
 }
