@@ -9,6 +9,7 @@ import lombok.Builder;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.sanghye.webservice.domain.ContentType.QUESTION;
@@ -48,6 +49,11 @@ public class Question extends AbstractEntity implements UrlGeneratable {
         this.title = title;
         this.contents = contents;
         this.writer = loginUser;
+    }
+
+    public static List<List<String>> convertFromJsonArrayToDoubleArray(List<String> originalQuestions) {
+        List<List<String>> convertedQuestions = new ArrayList<>();
+        return convertedQuestions;
     }
 
     public String getTitle() {
