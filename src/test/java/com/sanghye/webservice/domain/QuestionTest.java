@@ -101,7 +101,7 @@ public class QuestionTest extends BaseTest {
         //given
 
         //when
-        Question.convertFromJsonArrayTodoubleArray();
+        Question.convertFromJsonArrayToDoubleArray();
 
         //then
         softly.assertThat().isEqaulTo();
