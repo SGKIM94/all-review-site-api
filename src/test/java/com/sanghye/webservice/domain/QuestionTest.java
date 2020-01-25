@@ -5,6 +5,9 @@ import com.sanghye.webservice.exception.UnAuthorizedException;
 import com.sanghye.webservice.support.test.BaseTest;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.sanghye.webservice.fixtures.Answer.newAnswer;
 import static com.sanghye.webservice.fixtures.Answer.newAnswerAnotherUser;
 import static com.sanghye.webservice.fixtures.Question.newQuestion;
@@ -99,11 +102,11 @@ public class QuestionTest extends BaseTest {
     @Test
     public void JSON_형태의_값을_Array_형태로_변환하는지() {
         //given
+        List<String> originQuestion = new ArrayList<>();
 
         //when
-        Question.convertFromJsonArrayToDoubleArray();
 
         //then
-        softly.assertThat().isEqaulTo();
+        softly.assertThat(Question.convertFromJsonArrayToDoubleArray(originQuestion)).isInstanceOf(List.class);
     }
 }
