@@ -32,7 +32,7 @@ public class RegisterRequestDto {
                 .build();
     }
 
-    public RegisterRequestDto toDtoEntity(String email, String password, String name, String mobile) {
+    public static RegisterRequestDto toDtoEntity(String email, String password, String name, String mobile) {
         return RegisterRequestDto.builder()
                 .email(email)
                 .password(password)
