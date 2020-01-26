@@ -102,11 +102,15 @@ public class QuestionTest extends BaseTest {
     @Test
     public void JSON_형태의_값을_Array_형태로_변환하는지() {
         //given
-        List<String> originQuestion = new ArrayList<>();
+        List<String> originalQuestions = new ArrayList<>();
+        originalQuestions.add("{\"id\": 2,\"title\": \"runtime 에 reflect 발동 주체 객체가 뭔지 알 방법이 있을까요?\",\"contents\": \"설계를 희한하게 하는 바람에 꼬인 문제같긴 합니다만. 여쭙습니다. \",\"deleted\": false}");
+        originalQuestions.add("{\"id\": 3,\"title\": \"runtime 에 reflect 발동 주체 객체가 뭔지 알 방법이 있을까요?\",\"contents\": \"설계를 희한하게 하는 바람에 꼬인 문제같긴 합니다만. 여쭙습니다. \",\"deleted\": false}");
+        originalQuestions.add("{\"id\": 4,\"title\": \"runtime 에 reflect 발동 주체 객체가 뭔지 알 방법이 있을까요?\",\"contents\": \"설계를 희한하게 하는 바람에 꼬인 문제같긴 합니다만. 여쭙습니다.\",\"deleted\": false}");
 
         //when
-
+        List<List<String>> convertedQuestions = Question.convertFromJsonArrayToDoubleArray(originalQuestions);
         //then
-        softly.assertThat(Question.convertFromJsonArrayToDoubleArray(originQuestion)).isInstanceOf(List.class);
+        softly.assertThat(convertedQuestions).isInstanceOf(List.class);
+        softly.assertThat(convertedQuestions.get(0).get(0)).isEqualTo("2");
     }
 }
