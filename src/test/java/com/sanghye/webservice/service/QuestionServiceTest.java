@@ -1,5 +1,6 @@
 package com.sanghye.webservice.service;
 
+import com.sanghye.webservice.dto.question.RegisterRequestDto;
 import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.domain.Question;
 import com.sanghye.webservice.domain.QuestionRepository;
@@ -15,6 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static com.sanghye.webservice.fixtures.Question.newRequestDto;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
@@ -31,6 +33,7 @@ public class QuestionServiceTest extends BaseTest {
     private static final String DEFAULT_LOGIN_USER = "javajigi";
     private final Question question = new Question("question title", "nextstep contents");
     private final Question original = new Question("title", "contents");
+
     private final Question target = new Question("new title", "new contents");
     private final User user = new User("javajigi", "test", "자바지기", "javajigi@slipp.net");
 
@@ -38,7 +41,7 @@ public class QuestionServiceTest extends BaseTest {
     public void create_question_success() {
         when(questionRepository.findById(question.getId())).thenReturn(Optional.of(question));
 
-        qnaService.create(user, question);
+        qnaService.create(user, newRequestDto(question, DEFAULT_LOGIN_USER));
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -48,7 +51,8 @@ public class QuestionServiceTest extends BaseTest {
 
         when(questionRepository.findById(user.getId())).thenReturn(Optional.of(question));
 
-        qnaService.create(user, question);
+        qnaService.create(user, newRequestDto(question, DEFAULT_LOGIN_USER));
+
     }
 
     @Test
