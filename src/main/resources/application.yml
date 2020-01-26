@@ -14,13 +14,10 @@ spring:
       format_sql: true
 
 
-
-
 handlebars:
   suffix: .html
   cache:  false
   expose-session-attributes:  true
-
 
 
 logging:
