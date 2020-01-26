@@ -28,7 +28,7 @@ public class RegisterRequestDto {
                 .build();
     }
 
-    public RegisterRequestDto toDtoEntity(String title, String contents, String writer) {
+    public static RegisterRequestDto toDtoEntity(String title, String contents, String writer) {
         return RegisterRequestDto.builder()
                 .title(title)
                 .contents(contents)
