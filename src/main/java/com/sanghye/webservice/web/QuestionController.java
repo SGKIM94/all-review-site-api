@@ -22,15 +22,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/questions")
 public class QuestionController {
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+    private static final Logger log = LoggerFactory.getLogger(QuestionController.class);
 
     @Resource(name = "qnaService")
     private QnaService qnaService;
-
-    @GetMapping("/form")
-    public String form() {
-        return "/qna/form";
-    }
 
     @PostMapping("")
     public String create(@LoginUser User user, RegisterRequestDto question) {
