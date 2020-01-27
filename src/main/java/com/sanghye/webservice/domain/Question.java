@@ -5,7 +5,6 @@ import com.sanghye.webservice.exception.UnAuthorizedException;
 import com.sanghye.webservice.support.domain.AbstractEntity;
 import com.sanghye.webservice.support.domain.UrlGeneratable;
 import lombok.Builder;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
@@ -57,23 +56,23 @@ public class Question extends AbstractEntity implements UrlGeneratable {
         List<List<String>> convertedQuestions = new ArrayList<>();
 
         for (String originalQuestion : originalQuestions) {
-            List<String> convertedQuestion = new ArrayList<>();
-
-            convertFromJsonArrayToList(originalQuestion, convertedQuestion);
-
-            convertedQuestions.add(convertedQuestion);
+            convertedQuestions.add(convertFromJsonArrayToList(originalQuestion));
         }
 
         return convertedQuestions;
     }
 
-    private static void convertFromJsonArrayToList(String question, List<String> convertedQuestion) {
+    private static List<String> convertFromJsonArrayToList(String question) {
         JSONObject questionsJson = new JSONObject(question);
+        List<String> convertedQuestion = new ArrayList<>();
 
-        for (int j = 0; j < questionsJson.length(); j++) {
-            JSONArray jsonArray = new JSONArray(question);
-            convertedQuestion.add(jsonArray.getString(j));
+        for (int i = 0; i < questionsJson.length(); i++) {
+            for (String key : questionsJson.keySet()) {
+                convertedQuestion.add(questionsJson.get(key).toString());
+            }
         }
+
+        return convertedQuestion;
     }
 
     public String getTitle() {
