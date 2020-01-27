@@ -2,21 +2,28 @@ package com.sanghye.webservice.web;
 
 import com.sanghye.webservice.domain.Question;
 import com.sanghye.webservice.domain.User;
+import com.sanghye.webservice.dto.question.ListResponseDto;
 import com.sanghye.webservice.dto.question.RegisterRequestDto;
 import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.security.LoginUser;
 import com.sanghye.webservice.service.QnaService;
 import com.sanghye.webservice.support.domain.BaseResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/questions")
 public class ApiQuestionController {
+    private static final Logger log = LoggerFactory.getLogger(ApiQuestionController.class);
+
 
     @Resource(name = "qnaService")
     private QnaService qnaService;
@@ -30,6 +37,14 @@ public class ApiQuestionController {
     @GetMapping("/{id}")
     public Question show(@PathVariable long id) {
         return qnaService.findById(id);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<BaseResponse> list(Pageable pageable) {
+        List<Question> questions = qnaService.findAll(pageable);
+        log.debug("question size : {}", questions.size());
+
+        return new ResponseEntity<>(new BaseResponse(ListResponseDto.toDtoEntity(questions)), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
