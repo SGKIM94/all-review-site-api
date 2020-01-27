@@ -33,15 +33,6 @@ public class QuestionController {
         return "redirect:/questions/form";
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<BaseResponse> list(Model model, Pageable pageable) {
-        List<Question> questions = qnaService.findAll(pageable);
-        log.debug("question size : {}", questions.size());
-
-        model.addAttribute("questions", questions);
-        return new ResponseEntity<>(new BaseResponse(model), HttpStatus.OK);
-    }
-
     @GetMapping("/{id}/form")
     public String updateForm(@PathVariable long id, Model model) {
         model.addAttribute("question", qnaService.findById(id));
