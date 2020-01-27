@@ -11,12 +11,14 @@ import com.sanghye.webservice.support.domain.BaseResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,7 +31,16 @@ public class ApiQuestionController {
     private QnaService qnaService;
 
     @PostMapping("")
-    public ResponseEntity<BaseResponse> create(@LoginUser User loginUser, @Valid @RequestBody RegisterRequestDto question) {
+    public ResponseEntity<Void> create(@LoginUser User loginUser, @Valid @RequestBody RegisterRequestDto question) {
+        Question saveQuestion = qnaService.create(loginUser, question);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/api/questions/" + saveQuestion.getId()));
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/write")
+    public ResponseEntity<BaseResponse> write(@LoginUser User loginUser, @Valid @RequestBody RegisterRequestDto question) {
         Question saveQuestion = qnaService.create(loginUser, question);
         return new ResponseEntity<>(new BaseResponse(saveQuestion), HttpStatus.OK);
     }
