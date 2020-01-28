@@ -2,6 +2,7 @@ package com.sanghye.webservice.web;
 
 import com.sanghye.webservice.domain.Question;
 import com.sanghye.webservice.domain.User;
+import com.sanghye.webservice.support.domain.BaseResponse;
 import com.sanghye.webservice.support.test.AcceptanceTest;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -70,6 +71,19 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
 
         ResponseEntity<Void> responseEntity
                 = jwtAuthTemplate().exchange(location, HttpMethod.DELETE, createHttpEntity(original), Void.class);
+
+        softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    public void list_조회시_데이터가_정상적으로_리턴되는지() {
+        User loginUser = defaultUser();
+
+        String location = createLocation(loginUser);
+        Question original = getResource(location, Question.class, loginUser);
+
+        ResponseEntity<BaseResponse> responseEntity
+                = jwtAuthTemplate().exchange(location, HttpMethod.GET, createHttpEntity(original), BaseResponse.class);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
