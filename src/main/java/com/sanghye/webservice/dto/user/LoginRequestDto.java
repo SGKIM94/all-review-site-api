@@ -26,7 +26,7 @@ public class LoginRequestDto {
                 .build();
     }
 
-    public LoginRequestDto toDtoEntity(String email, String password) {
+    public static LoginRequestDto toDtoEntity(String email, String password) {
         return LoginRequestDto.builder()
                 .email(email)
                 .password(password)
