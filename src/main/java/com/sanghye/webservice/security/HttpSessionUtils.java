@@ -9,27 +9,25 @@ import javax.servlet.http.HttpSession;
 public class HttpSessionUtils {
     public static final String USER_SESSION_KEY = "loginedUser";
 
-    public static boolean isLoginUser(NativeWebRequest webRequest) {
+    private static boolean isLoginUser(NativeWebRequest webRequest) {
         Object loginedUser = webRequest.getAttribute(USER_SESSION_KEY, WebRequest.SCOPE_SESSION);
         return loginedUser != null;
     }
 
-    public static User getUserFromSession(NativeWebRequest webRequest) {
+    static User getUserFromSession(NativeWebRequest webRequest) {
         if (!isLoginUser(webRequest)) {
             return User.GUEST_USER;
         }
         return (User) webRequest.getAttribute(USER_SESSION_KEY, WebRequest.SCOPE_SESSION);
     }
 
-    public static boolean isLoginUser(HttpSession session) {
+    private static boolean isLoginUser(HttpSession session) {
         Object sessionedUser = session.getAttribute(USER_SESSION_KEY);
-        if (sessionedUser == null) {
-            return false;
-        }
-        return true;
+
+        return sessionedUser != null;
     }
 
-    public static User getUserFromSession(HttpSession session) {
+    private static User getUserFromSession(HttpSession session) {
         if (!isLoginUser(session)) {
             return null;
         }
