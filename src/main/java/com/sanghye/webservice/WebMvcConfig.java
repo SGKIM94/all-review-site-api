@@ -5,6 +5,8 @@ import com.sanghye.webservice.converter.LocalDateTimeConverter;
 import com.sanghye.webservice.security.JwtAuthInterceptor;
 import com.sanghye.webservice.security.LoginUserHandlerMethodArgumentResolver;
 import com.sanghye.webservice.security.TokenAuthenticationService;
+import com.sanghye.webservice.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,10 @@ import java.util.List;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private UserService userService;
+
     private static String[] INTERCEPTOR_WHITE_LIST = {
             "/home",
             "/base",
@@ -63,7 +69,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public JwtAuthInterceptor jwtAuthInterceptor() {
-        return new JwtAuthInterceptor(new TokenAuthenticationService());
+        return new JwtAuthInterceptor(userService, new TokenAuthenticationService());
     }
 
     @Bean
