@@ -1,6 +1,8 @@
 package com.sanghye.webservice.security;
 
 import com.sanghye.webservice.exception.UnAuthenticationException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class TokenAuthenticationService {
         return Jwts.builder()
                 .setHeaderParam("type", "JWT")
                 .setSubject(userId)
+                .claim("userId", userId)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(SignatureAlgorithm.HS256, this.generateKey(SALT))
                 .compact();
@@ -29,9 +32,7 @@ public class TokenAuthenticationService {
 
     boolean isAuthenticationUser(String token) throws UnAuthenticationException {
         try {
-            Jwts.parser()
-                .setSigningKey(this.generateKey(SALT))
-                .parseClaimsJws(token);
+            getJwtClaims(token);
 
             return true;
         } catch(Exception e) {
@@ -41,5 +42,17 @@ public class TokenAuthenticationService {
 
     byte[] generateKey(String salt){
         return salt.getBytes();
+    }
+
+    private Jws<Claims> getJwtClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(this.generateKey(SALT))
+                .parseClaimsJws(token);
+    }
+
+    public String getUserIdByClaim(String token) {
+        Jws<Claims> claims = getJwtClaims(token);
+
+        return claims.getBody().get("userId").toString();
     }
 }
