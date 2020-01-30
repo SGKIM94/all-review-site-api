@@ -37,8 +37,15 @@ public class UserService {
         }
     }
 
-    private boolean isExistUser(String userId) {
+    @Transactional(readOnly = true)
+    public boolean isExistUser(String userId) {
         return userRepository.findByUserId(userId).isPresent();
+    }
+
+    @Transactional(readOnly = true)
+    public User findByUserId(String userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(UnAuthorizedException::new);
     }
 
     @Transactional
