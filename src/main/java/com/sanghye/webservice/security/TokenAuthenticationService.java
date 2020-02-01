@@ -50,7 +50,7 @@ public class TokenAuthenticationService {
                 .parseClaimsJws(token);
     }
 
-    public String getUserIdByClaim(String token) {
+    String getUserIdByClaim(String token) {
         Jws<Claims> claims = getJwtClaims(token);
 
         return claims.getBody().get("userId").toString();
