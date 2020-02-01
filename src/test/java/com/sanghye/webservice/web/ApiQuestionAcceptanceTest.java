@@ -16,6 +16,7 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     private static final String TITLE = "제목 내용";
     private static final String CONTENTS = "본문 내용";
     private static final String API_QUESTION_LOCATION = "/api/questions";
+    private static final String API_QUESTION_LIST_LOCATION = "/api/questions/list";
 
     @Test
     public void create() throws Exception {
@@ -83,9 +84,11 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
         Question original = getResource(location, Question.class, loginUser);
 
         ResponseEntity<BaseResponse> responseEntity
-                = jwtAuthTemplate().exchange(location, HttpMethod.GET, createHttpEntity(original), BaseResponse.class);
+                = jwtAuthTemplate().exchange(API_QUESTION_LIST_LOCATION, HttpMethod.GET, createHttpEntity(original), BaseResponse.class);
 
+        BaseResponse body = responseEntity.getBody();
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        softly.assertThat(body.getInformation()).isNotNull();
     }
 
     private String createLocation(User loginUser) {
