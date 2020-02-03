@@ -88,6 +88,10 @@ public class Question extends AbstractEntity implements UrlGeneratable {
         return contents;
     }
 
+    public User getWriter() {
+        return this.writer;
+    }
+
     public Question setContents(String contents) {
         this.contents = contents;
         return this;
