@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.*;
 
-import java.util.Map;
+import java.util.*;
 
 import static com.sanghye.webservice.fixtures.Question.newQuestion;
 
@@ -23,7 +23,7 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     private static final String API_QUESTION_LIST_LOCATION = "/api/questions/list";
 
     @Test
-    public void create() throws Exception {
+    public void create() {
         User loginUser = defaultUser();
 
         Question question = newQuestion(TITLE, CONTENTS, loginUser);
@@ -37,7 +37,7 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
 
 
     @Test
-    public void update() throws Exception {
+    public void update() {
         User loginUser = defaultUser();
 
         String location = createLocation(loginUser);
@@ -53,7 +53,7 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    public void update_no_login() throws Exception {
+    public void update_no_login() {
         User loginUser = defaultUser();
         String location = createLocation(loginUser);
 
@@ -68,7 +68,7 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    public void delete() throws Exception {
+    public void delete() {
         User loginUser = defaultUser();
 
         String location = createLocation(loginUser);
@@ -91,21 +91,29 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
                 = jwtAuthTemplate()
                 .exchange(API_QUESTION_LIST_LOCATION, HttpMethod.GET, createHttpEntity(original), BaseResponse.class);
 
-        Map<String, Object> question = getQuestionsFromBody(responseEntity);
+        Question question = getFirstQuestionsFromBody(responseEntity);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        softly.assertThat(question.get("writer")).isNotNull();
+        softly.assertThat(question).isNotNull();
     }
 
-    private Map<String, Object> getQuestionsFromBody(ResponseEntity<BaseResponse> responseEntity) {
+    private Question getFirstQuestionsFromBody(ResponseEntity<BaseResponse> responseEntity) {
         BaseResponse body = responseEntity.getBody();
-        Map<String, Object> information = convertFromObjectToMap(body);
-        return convertFromObjectToMap(information.get("questions"));
+
+        assert body != null;
+        List<Question> information = convertFromObjectToListQuestion(body.getInformation());
+
+        return convertFromObjectToQuestion(information.get(0));
     }
 
-    private Map<String, Object> convertFromObjectToMap(Object value) {
+    private Question convertFromObjectToQuestion(Object value) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(value, new TypeReference<Map<String, Object>>() {});
+        return objectMapper.convertValue(value, new TypeReference<Question>() {});
+    }
+
+    private List<Question> convertFromObjectToListQuestion(Object value) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.convertValue(value, new TypeReference<List<Question>>() {});
     }
 
     private String createLocation(User loginUser) {
