@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -21,10 +21,9 @@ public class ListResponseDto {
     }
 
     public static ListResponseDto toDtoEntity(List<Question> questions) {
-        List<ListOneResponseDto> dto = new ArrayList<>();
-        questions.stream()
-                .map(question -> dto.add(ListOneResponseDto.toDtoEntity(question)))
-                .close();
+        List<ListOneResponseDto> dto = questions.stream()
+                .map(ListOneResponseDto::toDtoEntity)
+                .collect(Collectors.toList());
 
         return ListResponseDto.builder()
                 .questions(dto)
