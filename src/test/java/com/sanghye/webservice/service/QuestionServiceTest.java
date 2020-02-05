@@ -1,11 +1,10 @@
 package com.sanghye.webservice.service;
 
-import com.sanghye.webservice.dto.question.RegisterRequestDto;
-import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.domain.Question;
 import com.sanghye.webservice.domain.QuestionRepository;
 import com.sanghye.webservice.domain.User;
 import com.sanghye.webservice.domain.UserRepository;
+import com.sanghye.webservice.exception.CannotDeleteException;
 import com.sanghye.webservice.support.test.BaseTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +40,7 @@ public class QuestionServiceTest extends BaseTest {
     public void create_question_success() {
         when(questionRepository.findById(question.getId())).thenReturn(Optional.of(question));
 
-        qnaService.create(user, newRequestDto(question, DEFAULT_LOGIN_USER));
+        qnaService.create(user, newRequestDto(question, user));
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -51,8 +50,7 @@ public class QuestionServiceTest extends BaseTest {
 
         when(questionRepository.findById(user.getId())).thenReturn(Optional.of(question));
 
-        qnaService.create(user, newRequestDto(question, DEFAULT_LOGIN_USER));
-
+        qnaService.create(user, newRequestDto(question, user));
     }
 
     @Test
