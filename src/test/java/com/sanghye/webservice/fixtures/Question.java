@@ -18,7 +18,7 @@ public class Question {
         return new com.sanghye.webservice.domain.Question(id, title, contents, loginUser);
     }
 
-    public static RegisterRequestDto newRequestDto(com.sanghye.webservice.domain.Question question, String userid) {
-        return RegisterRequestDto.toDtoEntity(question.getTitle(), question.getContents(),userid);
+    public static RegisterRequestDto newRequestDto(com.sanghye.webservice.domain.Question question, User user) {
+        return RegisterRequestDto.toDtoEntity(question.getTitle(), question.getContents(), user);
     }
 }
