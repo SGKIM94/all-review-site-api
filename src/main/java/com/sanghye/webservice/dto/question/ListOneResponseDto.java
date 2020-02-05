@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ListOneResponseDto {
+    private long id;
     private String title;
     private String contents;
     private User writer;
@@ -19,6 +20,7 @@ public class ListOneResponseDto {
 
     @Builder
     public ListOneResponseDto(Question question) {
+        this.id = question.getId();
         this.title = question.getTitle();
         this.contents = question.getContents();
         this.writer = question.getWriter();
