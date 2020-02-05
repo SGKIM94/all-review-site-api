@@ -22,6 +22,8 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     private static final String API_QUESTION_LOCATION = "/api/questions";
     private static final String API_QUESTION_LIST_LOCATION = "/api/questions/list";
 
+    final ObjectMapper objectMapper = new ObjectMapper();
+
     @Test
     public void create() {
         User loginUser = defaultUser();
@@ -91,29 +93,29 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
                 = jwtAuthTemplate()
                 .exchange(API_QUESTION_LIST_LOCATION, HttpMethod.GET, createHttpEntity(original), BaseResponse.class);
 
-        Question question = getFirstQuestionsFromBody(responseEntity);
+        Map<String, Object> question = getFirstQuestionsFromBody(responseEntity);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         softly.assertThat(question).isNotNull();
+        softly.assertThat(question.get("writer").getClass()).isNotNull();
     }
 
-    private Question getFirstQuestionsFromBody(ResponseEntity<BaseResponse> responseEntity) {
+    private Map<String, Object> getFirstQuestionsFromBody(ResponseEntity<BaseResponse> responseEntity) {
         BaseResponse body = responseEntity.getBody();
 
         assert body != null;
-        List<Question> information = convertFromObjectToListQuestion(body.getInformation());
+        Map<String, Object> information = convertFromObjectToMap(body.getInformation());
+        List<Map<String, Object>> questions = convertFromObjectToListMap(information.get("questions"));
 
-        return convertFromObjectToQuestion(information.get(0));
+        return convertFromObjectToMap(questions.get(0));
     }
 
-    private Question convertFromObjectToQuestion(Object value) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(value, new TypeReference<Question>() {});
+    private Map<String, Object> convertFromObjectToMap(Object value) {
+        return objectMapper.convertValue(value, new TypeReference<Map<String, Object>>() {});
     }
 
-    private List<Question> convertFromObjectToListQuestion(Object value) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(value, new TypeReference<List<Question>>() {});
+    private List<Map<String, Object>> convertFromObjectToListMap(Object value) {
+        return objectMapper.convertValue(value, new TypeReference<List<Map<String, Object>>>(){});
     }
 
     private String createLocation(User loginUser) {
