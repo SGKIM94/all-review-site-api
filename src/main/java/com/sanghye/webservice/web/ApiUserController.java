@@ -10,12 +10,14 @@ import com.sanghye.webservice.security.TokenAuthenticationService;
 import com.sanghye.webservice.service.UserService;
 import com.sanghye.webservice.support.domain.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.net.URI;
 
 @Slf4j
 @RestController
@@ -28,7 +30,16 @@ public class ApiUserController {
     private TokenAuthenticationService tokenAuthenticationService;
 
     @PostMapping("")
-    public ResponseEntity<BaseResponse> create(@Valid @RequestBody RegisterRequestDto user) {
+    public ResponseEntity<Void> create(@Valid @RequestBody User user) {
+        User savedUser = userService.add(user);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/api/users/" + savedUser.getId()));
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<BaseResponse> register(@Valid @RequestBody RegisterRequestDto user) {
         userService.checkUserExist(user.getUserId());
         RegisterResponseDto savedUser = userService.addByRegisterRequestDto(user);
         return new ResponseEntity<>(new BaseResponse(savedUser), HttpStatus.OK);
