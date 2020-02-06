@@ -111,6 +111,6 @@ public class QuestionTest extends BaseTest {
         List<List<String>> convertedQuestions = Question.convertFromJsonArrayToDoubleArray(originalQuestions);
         //then
         softly.assertThat(convertedQuestions).isInstanceOf(List.class);
-        softly.assertThat(convertedQuestions.get(0).get(0)).isEqualTo("2");
+        softly.assertThat(convertedQuestions.get(0).get(0)).isEqualTo("false");
     }
 }
