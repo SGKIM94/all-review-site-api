@@ -29,10 +29,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private static String[] INTERCEPTOR_WHITE_LIST = {
             "/home",
             "/base",
-            "/api/users/**",
-            "/users/login/",
-            "/user/login/",
-            "/users/form/"
+            "/api/users/login",
+            "/api/users/",
+            "/api/users/form",
+            "/user/",
+            "/users/login",
+            "/user/login",
+            "/users/form"
     };
 
     @Override
