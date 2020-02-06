@@ -11,7 +11,7 @@ import static com.sanghye.webservice.fixtures.User.newUser;
 
 public class ApiUserAcceptanceTest extends AcceptanceTest {
     private static final Logger log = LoggerFactory.getLogger(ApiUserAcceptanceTest.class);
-    static final String API_USER_LOCATION = "/api/users";
+    private static final String API_USER_LOCATION = "/api/users";
 
     @Test
     public void create() throws Exception {
@@ -63,7 +63,7 @@ public class ApiUserAcceptanceTest extends AcceptanceTest {
                         "javajigi2", "javajigi2@slipp.net");
 
         ResponseEntity<String> responseEntity =
-                template().exchange(location, HttpMethod.PUT, createHttpEntity(updateUser), String.class);
+                template().exchange(location, HttpMethod.PUT, createNoAuthorizationHttpEntity(updateUser), String.class);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         log.debug("error message : {}", responseEntity.getBody());
@@ -79,11 +79,5 @@ public class ApiUserAcceptanceTest extends AcceptanceTest {
         ResponseEntity<Void> responseEntity =
                 jwtAuthTemplate(defaultUser()).exchange(location, HttpMethod.PUT, createHttpEntity(updateUser), Void.class);
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-    }
-
-    private HttpEntity createHttpEntity(Object body) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return new HttpEntity(body, headers);
     }
 }
