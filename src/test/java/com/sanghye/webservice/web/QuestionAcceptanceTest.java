@@ -18,13 +18,6 @@ public class QuestionAcceptanceTest extends AcceptanceTest {
     private static final String FORMAT_PATH_VALUE_ID = "/%d";
 
     @Test
-    public void createForm() throws Exception {
-        ResponseEntity<String> response = template().getForEntity("/questions/form", String.class);
-        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        log.debug("body : {}", response.getBody());
-    }
-
-    @Test
     public void create() throws Exception {
         User loginUser = defaultUser();
         String title = "첫 게시물";
@@ -37,21 +30,6 @@ public class QuestionAcceptanceTest extends AcceptanceTest {
                 .build();
 
         softly.assertThat(foundResource(getQuestionPath(""), request)).startsWith("/questions");
-    }
-
-    @Test
-    public void list() throws Exception {
-        PageRequest pageRequest = PageRequest.of(1, 10);
-        ResponseEntity<String> response = template().getForEntity(String.format("/questions/list", pageRequest),  String.class);
-        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        log.debug("body : {}", response.getBody());
-    }
-
-    @Test
-    public void updateForm() throws Exception {
-        ResponseEntity<String> response = template().getForEntity(String.format("/questions/%d/form", defaultUser().getId()), String.class);
-        softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        log.debug("body : {}", response.getBody());
     }
 
     @Test
