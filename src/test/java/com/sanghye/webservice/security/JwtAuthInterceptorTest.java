@@ -32,12 +32,13 @@ public class JwtAuthInterceptorTest extends BaseTest {
 
     @Test
     public void JWT_preHandle_로그인_성공() throws Exception {
-        String userId = "sanggu";
+        String userId = "tkdrn8578";
         String password = "password";
 
         MockHttpServletRequest request = jwtAuthHttpRequest(userId);
         User loginUser = new User(userId, password, "name", "javajigi@slipp.net");
         when(userService.checkLoginUser(userId, password)).thenReturn(loginUser);
+        when(userService.isExistUser(userId)).thenReturn(true);
 
         basicAuthInterceptor.preHandle(request, null, null);
 
