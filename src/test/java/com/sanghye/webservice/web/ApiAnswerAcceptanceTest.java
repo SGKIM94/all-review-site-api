@@ -51,10 +51,4 @@ public class ApiAnswerAcceptanceTest extends AcceptanceTest {
         createResource(API_QUESTION_LOCATION, newQuestion(TITLE, CONTENTS, loginUser));
         return location;
     }
-
-    private HttpEntity createHttpEntity(Object body) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return new HttpEntity(body, headers);
-    }
 }

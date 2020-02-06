@@ -22,7 +22,8 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     private static final String API_QUESTION_LOCATION = "/api/questions";
     private static final String API_QUESTION_LIST_LOCATION = "/api/questions/list";
 
-    final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
 
     @Test
     public void create() {
@@ -63,7 +64,8 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
         Question updateQuestion = new Question(original.getId(), original.getTitle(), original.getContents(), loginUser);
 
         ResponseEntity<Question> responseEntity =
-                template().exchange(location, HttpMethod.PUT, createHttpEntity(updateQuestion), Question.class);
+                template().exchange(location, HttpMethod.PUT,
+                        createNoAuthorizationHttpEntity(updateQuestion), Question.class);
 
         softly.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         log.debug("error message : {}", responseEntity.getBody());
@@ -121,11 +123,5 @@ public class ApiQuestionAcceptanceTest extends AcceptanceTest {
     private String createLocation(User loginUser) {
         Question question = newQuestion(TITLE, CONTENTS, loginUser);
         return createResource(API_QUESTION_LOCATION, question);
-    }
-
-    private HttpEntity createHttpEntity(Object body) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        return new HttpEntity(body, headers);
     }
 }
