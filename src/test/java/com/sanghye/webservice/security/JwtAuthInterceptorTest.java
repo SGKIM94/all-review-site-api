@@ -15,6 +15,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class JwtAuthInterceptorTest extends BaseTest {
+    public static final String KIM_ID = "tkdrn8578";
+    public static final String KIM_PASSWORD = "password";
     @Mock
     private UserService userService;
 
@@ -32,8 +34,8 @@ public class JwtAuthInterceptorTest extends BaseTest {
 
     @Test
     public void JWT_preHandle_로그인_성공() throws Exception {
-        String userId = "tkdrn8578";
-        String password = "password";
+        String userId = KIM_ID;
+        String password = KIM_PASSWORD;
 
         MockHttpServletRequest request = jwtAuthHttpRequest(userId);
         User loginUser = new User(userId, password, "name", "javajigi@slipp.net");
